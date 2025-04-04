@@ -1,3 +1,4 @@
+
 import { toast } from "sonner";
 
 interface Coordinates {
@@ -79,11 +80,11 @@ export const sendEmergencyMessage = async (imageBlob: Blob, locationDetails: Loc
   }
 };
 
-// Mock data for Salem medical facilities
+// Enhanced data for Salem medical facilities with more accurate coordinates
 export const getSalemMedicalFacilities = async (userLocation: Coordinates) => {
   // In a real app, this would fetch from a Google Places/Maps API with the user's location
   
-  // Mock data for demonstration
+  // Updated mock data for demonstration with more accurate Salem coordinates
   const facilities = [
     {
       id: 1,

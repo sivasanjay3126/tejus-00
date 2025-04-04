@@ -13,11 +13,11 @@ const GoToSaveButton = () => {
   return (
     <button 
       onClick={handleClick} 
-      className="emergency-button w-full bg-primary_blue hover:bg-primary_blue_dark"
+      className="emergency-button w-full bg-primary_blue hover:bg-primary_blue_dark text-white py-3 rounded-lg flex items-center justify-center gap-2 shadow-md transition-all"
       aria-label="Go to Save - Find nearby medical facilities"
     >
       <MapPin size={28} />
-      <span>Go to Save</span>
+      <span className="text-lg font-medium">Go to Save</span>
     </button>
   );
 };

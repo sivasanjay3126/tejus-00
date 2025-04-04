@@ -1,5 +1,5 @@
 
-import React, { useRef, useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { MapPin } from 'lucide-react';
 
 interface MapProps {
@@ -21,25 +21,22 @@ const Map = ({ latitude, longitude, facilities = [], selectedId }: MapProps) => 
   const [mapUrl, setMapUrl] = useState<string>("");
   
   useEffect(() => {
-    // Create a static map URL for Salem region
-    // In a real app, this would be an interactive map using Google Maps or Mapbox
+    // Create a more reliable static map URL with proper zoom level
     const createMapUrl = () => {
-      // Base URL for Google Maps static image
-      let url = `https://maps.googleapis.com/maps/api/staticmap?center=${latitude},${longitude}&zoom=14&size=600x300&maptype=roadmap`;
+      // Base URL for Google Maps static image - using a more reliable approach
+      const zoom = facilities.length > 0 ? 13 : 14; // Adjust zoom based on if we're showing facilities
+      let url = `https://maps.googleapis.com/maps/api/staticmap?center=${latitude},${longitude}&zoom=${zoom}&size=640x320&scale=2&maptype=roadmap`;
       
-      // Add marker for user's location
-      url += `&markers=color:red|label:Y|${latitude},${longitude}`;
+      // Add marker for user's location with a distinct color and label
+      url += `&markers=color:red|label:U|${latitude},${longitude}`;
       
-      // Add markers for facilities
+      // Add markers for facilities with proper labels and colors
       facilities.forEach((facility, index) => {
         const isSelected = facility.id === selectedId;
         const markerColor = isSelected ? 'green' : 'blue';
         const label = String.fromCharCode(65 + index); // A, B, C, etc.
         url += `&markers=color:${markerColor}|label:${label}|${facility.coordinates.latitude},${facility.coordinates.longitude}`;
       });
-      
-      // Note: In a production app, you would add your API key
-      // url += `&key=YOUR_GOOGLE_MAPS_API_KEY`;
       
       setMapUrl(url);
     };
@@ -54,6 +51,10 @@ const Map = ({ latitude, longitude, facilities = [], selectedId }: MapProps) => 
           src={mapUrl} 
           alt="Map showing medical facilities" 
           className="w-full h-full object-cover"
+          onError={(e) => {
+            console.error("Error loading map image");
+            e.currentTarget.style.display = 'none';
+          }}
         />
       ) : (
         <div className="flex items-center justify-center h-full">

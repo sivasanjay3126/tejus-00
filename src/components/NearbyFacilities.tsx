@@ -7,6 +7,7 @@ import { getCurrentLocation, getSalemMedicalFacilities } from '@/utils/locationU
 import Map from './Map';
 import FirstAidVideos from './FirstAidVideos';
 import { useNavigate } from 'react-router-dom';
+import { toast } from 'sonner';
 
 interface Facility {
   id: number;
@@ -41,6 +42,7 @@ const NearbyFacilities = () => {
         setFacilities(nearbyFacilities);
       } catch (error) {
         console.error("Error loading data:", error);
+        toast("Unable to load nearby facilities. Using default data.");
       } finally {
         setLoading(false);
       }
@@ -50,7 +52,8 @@ const NearbyFacilities = () => {
   }, []);
 
   const getDirectionsUrl = (facility: Facility) => {
-    return `https://www.google.com/maps/dir/${userLocation.latitude},${userLocation.longitude}/${facility.coordinates.latitude},${facility.coordinates.longitude}`;
+    // Using Google Maps directions URL format
+    return `https://www.google.com/maps/dir/?api=1&origin=${userLocation.latitude},${userLocation.longitude}&destination=${facility.coordinates.latitude},${facility.coordinates.longitude}&travelmode=driving`;
   };
 
   const handleCallFacility = (phone: string) => {
@@ -111,7 +114,7 @@ const NearbyFacilities = () => {
                   {typeFacilities.map(facility => (
                     <div 
                       key={facility.id} 
-                      className={`facility-card ${selectedFacility === facility.id ? 'ring-2 ring-primary_blue' : ''}`}
+                      className={`bg-white rounded-lg shadow-sm p-4 border ${selectedFacility === facility.id ? 'ring-2 ring-primary_blue' : 'border-gray-200'}`}
                       onClick={() => setSelectedFacility(facility.id)}
                     >
                       <h3 className="font-semibold">{facility.name}</h3>
@@ -123,7 +126,10 @@ const NearbyFacilities = () => {
                             size="sm" 
                             variant="outline"
                             className="flex items-center gap-1"
-                            onClick={() => handleCallFacility(facility.phone)}
+                            onClick={(e) => {
+                              e.stopPropagation(); // Prevent triggering parent onClick
+                              handleCallFacility(facility.phone);
+                            }}
                           >
                             <Phone size={14} />
                             Call
@@ -131,7 +137,10 @@ const NearbyFacilities = () => {
                           <Button 
                             size="sm" 
                             className="flex items-center gap-1 bg-primary_blue hover:bg-primary_blue_dark"
-                            onClick={() => window.open(getDirectionsUrl(facility), '_blank')}
+                            onClick={(e) => {
+                              e.stopPropagation(); // Prevent triggering parent onClick
+                              window.open(getDirectionsUrl(facility), '_blank');
+                            }}
                           >
                             <ArrowRight size={14} />
                             Directions
