@@ -1,10 +1,10 @@
-
 import React, { useState, useRef, useEffect } from 'react';
 import { Camera, X, Upload, ArrowLeft } from 'lucide-react';
 import { Button } from '@/components/ui/button';
-import { toast } from '@/components/ui/sonner';
+import { toast } from "sonner";
 import { getCurrentLocation, sendEmergencyMessage, LocationDetails } from '@/utils/locationUtils';
 import { useNavigate } from 'react-router-dom';
+import { MapPin } from 'lucide-react';
 
 const CameraCapture = () => {
   const [capturedImage, setCapturedImage] = useState<string | null>(null);
@@ -15,7 +15,6 @@ const CameraCapture = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    // Get user location on component mount
     const getLocation = async () => {
       try {
         const location = await getCurrentLocation();
@@ -27,10 +26,8 @@ const CameraCapture = () => {
     
     getLocation();
     
-    // Initialize camera
     startCamera();
 
-    // Cleanup function
     return () => {
       if (streamRef.current) {
         streamRef.current.getTracks().forEach(track => track.stop());
@@ -43,7 +40,7 @@ const CameraCapture = () => {
       setLoading(true);
       const constraints = {
         video: {
-          facingMode: 'environment', // Use rear camera on mobile devices
+          facingMode: 'environment',
           width: { ideal: 1280 },
           height: { ideal: 720 }
         },
@@ -77,7 +74,6 @@ const CameraCapture = () => {
       const imageDataUrl = canvas.toDataURL('image/jpeg');
       setCapturedImage(imageDataUrl);
       
-      // Stop camera stream after capturing
       if (streamRef.current) {
         streamRef.current.getTracks().forEach(track => track.stop());
       }
@@ -98,16 +94,13 @@ const CameraCapture = () => {
     setLoading(true);
     
     try {
-      // Convert base64 to blob for sending
       const response = await fetch(capturedImage);
       const imageBlob = await response.blob();
       
-      // Send emergency message with image and location
       await sendEmergencyMessage(imageBlob, locationDetails);
       
       toast.success("Emergency alert sent successfully!");
       
-      // Redirect to home page after sending
       setTimeout(() => {
         navigate('/');
       }, 2000);
@@ -197,8 +190,5 @@ const CameraCapture = () => {
     </div>
   );
 };
-
-// Add missing import for MapPin
-import { MapPin } from 'lucide-react';
 
 export default CameraCapture;
