@@ -25,7 +25,7 @@ interface Facility {
 const NearbyFacilities = () => {
   const [facilities, setFacilities] = useState<Facility[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
-  const [userLocation, setUserLocation] = useState({ latitude: 11.6643, longitude: 78.1460 });
+  const [userLocation, setUserLocation] = useState({ latitude: 11.0168, longitude: 76.9558 }); // Default Coimbatore coordinates
   const [selectedFacility, setSelectedFacility] = useState<number | undefined>(undefined);
   const navigate = useNavigate();
 
@@ -37,12 +37,12 @@ const NearbyFacilities = () => {
         const location = await getCurrentLocation();
         setUserLocation(location.coordinates);
         
-        // Get nearby facilities
+        // Get nearby facilities - sorted by distance in the function
         const nearbyFacilities = await getSalemMedicalFacilities(location.coordinates);
         setFacilities(nearbyFacilities);
       } catch (error) {
         console.error("Error loading data:", error);
-        toast("Unable to load nearby facilities. Using default data.");
+        toast.error("Unable to load nearby facilities. Using default data.");
       } finally {
         setLoading(false);
       }
@@ -52,7 +52,7 @@ const NearbyFacilities = () => {
   }, []);
 
   const getDirectionsUrl = (facility: Facility) => {
-    // Using Google Maps directions URL format
+    // Using Google Maps directions URL format with improved accuracy
     return `https://www.google.com/maps/dir/?api=1&origin=${userLocation.latitude},${userLocation.longitude}&destination=${facility.coordinates.latitude},${facility.coordinates.longitude}&travelmode=driving`;
   };
 
@@ -61,9 +61,9 @@ const NearbyFacilities = () => {
   };
 
   const facilitiesByType = {
-    'Hospital': facilities.filter(f => f.type === 'Hospital'),
-    'Medical Shop': facilities.filter(f => f.type === 'Medical Shop'),
-    'Medical Tent': facilities.filter(f => f.type === 'Medical Tent')
+    'Hospital': facilities.filter(f => f.type === 'Hospital').slice(0, 20),
+    'Medical Shop': facilities.filter(f => f.type === 'Medical Shop').slice(0, 20),
+    'Medical Tent': facilities.filter(f => f.type === 'Medical Tent').slice(0, 20)
   };
 
   return (
@@ -80,13 +80,13 @@ const NearbyFacilities = () => {
           <Map 
             latitude={userLocation.latitude}
             longitude={userLocation.longitude}
-            facilities={facilities}
+            facilities={facilities.slice(0, 20)}
             selectedId={selectedFacility}
           />
           <div className="bg-white p-3 rounded-b-lg shadow-md -mt-1 border-t border-gray-200">
             <p className="text-sm flex items-center">
               <MapPin size={16} className="mr-1 text-emergency" />
-              <span>Showing medical facilities near Salem, Tamil Nadu</span>
+              <span>Showing medical facilities near Coimbatore, Tamil Nadu</span>
             </p>
           </div>
         </div>
@@ -111,14 +111,21 @@ const NearbyFacilities = () => {
                 </div>
               ) : typeFacilities.length > 0 ? (
                 <div className="space-y-3">
-                  {typeFacilities.map(facility => (
+                  {typeFacilities.map((facility, index) => (
                     <div 
                       key={facility.id} 
                       className={`bg-white rounded-lg shadow-sm p-4 border ${selectedFacility === facility.id ? 'ring-2 ring-primary_blue' : 'border-gray-200'}`}
                       onClick={() => setSelectedFacility(facility.id)}
                     >
-                      <h3 className="font-semibold">{facility.name}</h3>
-                      <p className="text-sm text-gray-600">{facility.address}</p>
+                      <div className="flex items-start">
+                        <div className="bg-primary_blue text-white rounded-full w-6 h-6 flex items-center justify-center mr-2 flex-shrink-0">
+                          {String.fromCharCode(65 + index)}
+                        </div>
+                        <div className="flex-1">
+                          <h3 className="font-semibold">{facility.name}</h3>
+                          <p className="text-sm text-gray-600">{facility.address}</p>
+                        </div>
+                      </div>
                       <div className="flex justify-between items-center mt-2">
                         <span className="text-sm font-medium text-primary_blue">{facility.distance}</span>
                         <div className="flex gap-2">

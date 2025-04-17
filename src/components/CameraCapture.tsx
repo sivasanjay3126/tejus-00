@@ -1,3 +1,4 @@
+
 import React, { useState, useRef, useEffect } from 'react';
 import { Camera, X, Upload, ArrowLeft } from 'lucide-react';
 import { Button } from '@/components/ui/button';
@@ -73,6 +74,13 @@ const CameraCapture = () => {
       ctx.drawImage(videoRef.current, 0, 0, canvas.width, canvas.height);
       const imageDataUrl = canvas.toDataURL('image/jpeg');
       setCapturedImage(imageDataUrl);
+      
+      // Save location at the moment of capture
+      getCurrentLocation().then(location => {
+        setLocationDetails(location);
+      }).catch(error => {
+        console.error("Error updating location at capture time:", error);
+      });
       
       if (streamRef.current) {
         streamRef.current.getTracks().forEach(track => track.stop());

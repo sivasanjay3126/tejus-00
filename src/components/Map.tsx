@@ -1,5 +1,5 @@
 
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { MapPin } from 'lucide-react';
 
 interface MapProps {
@@ -17,7 +17,6 @@ interface MapProps {
 }
 
 const Map = ({ latitude, longitude, facilities = [], selectedId }: MapProps) => {
-  const mapRef = useRef<HTMLDivElement>(null);
   const [mapUrl, setMapUrl] = useState<string>("");
   
   useEffect(() => {
@@ -31,7 +30,7 @@ const Map = ({ latitude, longitude, facilities = [], selectedId }: MapProps) => 
       url += `&markers=color:red|label:U|${latitude},${longitude}`;
       
       // Add markers for facilities with proper labels and colors
-      facilities.forEach((facility, index) => {
+      facilities.slice(0, 20).forEach((facility, index) => {
         const isSelected = facility.id === selectedId;
         const markerColor = isSelected ? 'green' : 'blue';
         const label = String.fromCharCode(65 + index); // A, B, C, etc.
@@ -65,7 +64,7 @@ const Map = ({ latitude, longitude, facilities = [], selectedId }: MapProps) => 
         </div>
       )}
       <div className="absolute bottom-2 right-2 bg-white/80 text-xs px-2 py-1 rounded">
-        Salem, Tamil Nadu
+        Coimbatore, Tamil Nadu
       </div>
     </div>
   );

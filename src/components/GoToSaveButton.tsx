@@ -17,7 +17,7 @@ const GoToSaveButton = () => {
       aria-label="Go to Save - Find nearby medical facilities"
     >
       <MapPin size={28} />
-      <span className="text-lg font-medium">Go to Save</span>
+      <span className="text-lg font-medium">Find Nearby Help</span>
     </button>
   );
 };
