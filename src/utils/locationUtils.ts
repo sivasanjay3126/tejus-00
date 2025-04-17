@@ -79,8 +79,8 @@ export const sendEmergencyMessage = async (imageBlob: Blob, locationDetails: Loc
   }
 };
 
-// Enhanced data for Coimbatore medical facilities with accurate coordinates
-export const getSalemMedicalFacilities = async (userLocation: Coordinates) => {
+// Renamed from getSalemMedicalFacilities to getMedicalFacilities
+export const getMedicalFacilities = async (userLocation: Coordinates) => {
   // In a real app, this would fetch from a Google Places/Maps API with the user's location
   
   // Updated mock data for Coimbatore
