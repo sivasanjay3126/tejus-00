@@ -1,4 +1,3 @@
-
 import React from 'react';
 import EmergencyHeader from '@/components/EmergencyHeader';
 import SnapToSaveButton from '@/components/SnapToSaveButton';
@@ -25,7 +24,7 @@ const Index = () => {
             Emergency Response System
           </h1>
           <p className="text-center mb-6 text-gray-600">
-            Quick access to emergency services in Salem, Tamil Nadu
+            Quick access to emergency services across India
           </p>
           
           <div className="space-y-4">
@@ -56,10 +55,10 @@ const Index = () => {
         <div className="info-section">
           <h2 className="section-title">
             <MapPin />
-            About Salem Medical Services
+            About India Medical Services
           </h2>
           <p className="text-sm text-gray-600">
-            Salem district has multiple government and private hospitals equipped
+            India district has multiple government and private hospitals equipped
             with emergency services. The TEJUS app helps you locate and connect with
             the nearest medical facilities quickly during emergencies.
           </p>

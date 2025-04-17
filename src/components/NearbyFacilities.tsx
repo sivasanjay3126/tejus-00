@@ -1,9 +1,8 @@
-
 import React, { useEffect, useState } from 'react';
 import { Hospital, MapPin, Phone, ArrowRight, ArrowLeft } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
-import { getCurrentLocation, getSalemMedicalFacilities } from '@/utils/locationUtils';
+import { getCurrentLocation, getMedicalFacilities } from '@/utils/locationUtils';
 import Map from './Map';
 import FirstAidVideos from './FirstAidVideos';
 import { useNavigate } from 'react-router-dom';
@@ -33,12 +32,10 @@ const NearbyFacilities = () => {
     const loadData = async () => {
       try {
         setLoading(true);
-        // Get user's location
         const location = await getCurrentLocation();
         setUserLocation(location.coordinates);
         
-        // Get nearby facilities - sorted by distance in the function
-        const nearbyFacilities = await getSalemMedicalFacilities(location.coordinates);
+        const nearbyFacilities = await getMedicalFacilities(location.coordinates);
         setFacilities(nearbyFacilities);
       } catch (error) {
         console.error("Error loading data:", error);
@@ -52,7 +49,6 @@ const NearbyFacilities = () => {
   }, []);
 
   const getDirectionsUrl = (facility: Facility) => {
-    // Using Google Maps directions URL format with improved accuracy
     return `https://www.google.com/maps/dir/?api=1&origin=${userLocation.latitude},${userLocation.longitude}&destination=${facility.coordinates.latitude},${facility.coordinates.longitude}&travelmode=driving`;
   };
 
@@ -72,7 +68,7 @@ const NearbyFacilities = () => {
         <Button variant="ghost" size="icon" onClick={() => navigate('/')} className="text-white">
           <ArrowLeft />
         </Button>
-        <h1 className="text-xl font-bold ml-2 flex-1 text-center">TEJUS - Medical Help</h1>
+        <h1 className="text-xl font-bold ml-2 flex-1 text-center">TEJUS - Medical Help Across India</h1>
       </div>
       
       <div className="container mx-auto p-4 flex-1 overflow-auto pb-16">
@@ -86,7 +82,7 @@ const NearbyFacilities = () => {
           <div className="bg-white p-3 rounded-b-lg shadow-md -mt-1 border-t border-gray-200">
             <p className="text-sm flex items-center">
               <MapPin size={16} className="mr-1 text-emergency" />
-              <span>Showing medical facilities near Coimbatore, Tamil Nadu</span>
+              <span>Showing medical facilities across India</span>
             </p>
           </div>
         </div>
@@ -134,7 +130,7 @@ const NearbyFacilities = () => {
                             variant="outline"
                             className="flex items-center gap-1"
                             onClick={(e) => {
-                              e.stopPropagation(); // Prevent triggering parent onClick
+                              e.stopPropagation();
                               handleCallFacility(facility.phone);
                             }}
                           >
@@ -145,7 +141,7 @@ const NearbyFacilities = () => {
                             size="sm" 
                             className="flex items-center gap-1 bg-primary_blue hover:bg-primary_blue_dark"
                             onClick={(e) => {
-                              e.stopPropagation(); // Prevent triggering parent onClick
+                              e.stopPropagation();
                               window.open(getDirectionsUrl(facility), '_blank');
                             }}
                           >
