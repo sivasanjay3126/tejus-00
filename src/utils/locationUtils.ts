@@ -11,6 +11,19 @@ export interface LocationDetails {
   formattedAddress?: string;
 }
 
+export interface Facility {
+  id: number;
+  name: string;
+  type: string;
+  address: string;
+  phone: string;
+  distance: string;
+  coordinates: {
+    latitude: number;
+    longitude: number;
+  };
+}
+
 export const getCurrentLocation = (): Promise<LocationDetails> => {
   return new Promise((resolve, reject) => {
     if (!navigator.geolocation) {
@@ -23,14 +36,12 @@ export const getCurrentLocation = (): Promise<LocationDetails> => {
       (position) => {
         const { latitude, longitude, accuracy } = position.coords;
         
-        // Default to Coimbatore coordinates if location is not available
         const coordinates = {
-          latitude: latitude || 11.0168, // Coimbatore latitude
-          longitude: longitude || 76.9558, // Coimbatore longitude
+          latitude: latitude || 11.0168,
+          longitude: longitude || 76.9558,
           accuracy: accuracy
         };
         
-        // For a real app, you would reverse geocode here to get the address
         const locationDetails: LocationDetails = {
           coordinates,
           formattedAddress: `Lat: ${coordinates.latitude.toFixed(4)}, Long: ${coordinates.longitude.toFixed(4)}`
@@ -42,11 +53,10 @@ export const getCurrentLocation = (): Promise<LocationDetails> => {
         console.error("Error getting location:", error.message);
         toast.error("Unable to retrieve your location. Using default Coimbatore location.");
         
-        // Fallback to Coimbatore coordinates
         resolve({
           coordinates: {
-            latitude: 11.0168, // Coimbatore latitude
-            longitude: 76.9558, // Coimbatore longitude
+            latitude: 11.0168,
+            longitude: 76.9558,
           },
           formattedAddress: "Coimbatore, Tamil Nadu, India (Default)"
         });
@@ -57,14 +67,10 @@ export const getCurrentLocation = (): Promise<LocationDetails> => {
 };
 
 export const sendEmergencyMessage = async (imageBlob: Blob, locationDetails: LocationDetails): Promise<boolean> => {
-  // In a real app, this would connect to an SMS API service
   try {
-    // Simulate sending the message
     console.log("Sending emergency message with image and location:", locationDetails);
     toast.success("Emergency alert sent successfully! Help is on the way.");
     
-    // For demonstration - showing what would be sent
-    // In a real implementation, this would call an API endpoint that sends SMS
     const phoneNumber = "9092023126";
     const messageContent = `EMERGENCY ALERT from location: ${locationDetails.formattedAddress}`;
     
@@ -79,11 +85,7 @@ export const sendEmergencyMessage = async (imageBlob: Blob, locationDetails: Loc
   }
 };
 
-// Renamed from getSalemMedicalFacilities to getMedicalFacilities
 export const getMedicalFacilities = async (userLocation: Coordinates) => {
-  // In a real app, this would fetch from a Google Places/Maps API with the user's location
-  
-  // Updated mock data for Coimbatore
   const facilities = [
     {
       id: 1,
@@ -285,7 +287,7 @@ export const getMedicalFacilities = async (userLocation: Coordinates) => {
       phone: "04222452345",
       distance: calculateDistance(userLocation, { latitude: 11.0275, longitude: 76.9310 }),
       coordinates: {
-        latitude: 11.0275, 
+        latitude: 11.0275,
         longitude: 76.9310
       }
     },
@@ -324,17 +326,50 @@ export const getMedicalFacilities = async (userLocation: Coordinates) => {
         latitude: 11.0290,
         longitude: 77.0220
       }
+    },
+    {
+      id: 21,
+      name: "GVK EMRI Ambulance Service",
+      type: "Ambulance",
+      address: "RS Puram, Coimbatore",
+      phone: "108",
+      distance: calculateDistance(userLocation, { latitude: 11.0082, longitude: 76.9629 }),
+      coordinates: {
+        latitude: 11.0082,
+        longitude: 76.9629
+      }
+    },
+    {
+      id: 22,
+      name: "PSG Hospitals Ambulance",
+      type: "Ambulance",
+      address: "Peelamedu, Coimbatore",
+      phone: "04224345555",
+      distance: calculateDistance(userLocation, { latitude: 11.0323, longitude: 77.0338 }),
+      coordinates: {
+        latitude: 11.0323,
+        longitude: 77.0338
+      }
+    },
+    {
+      id: 23,
+      name: "KMCH Emergency Response",
+      type: "Ambulance",
+      address: "Avinashi Road, Coimbatore",
+      phone: "04224323800",
+      distance: calculateDistance(userLocation, { latitude: 11.0340, longitude: 77.0415 }),
+      coordinates: {
+        latitude: 11.0340,
+        longitude: 77.0415
+      }
     }
   ];
   
-  // Sort facilities by distance
   return facilities.sort((a, b) => parseFloat(a.distance) - parseFloat(b.distance));
 };
 
-// Function to calculate distance between two coordinates in km
 function calculateDistance(point1: Coordinates, point2: Coordinates): string {
-  // Implementation of Haversine formula to calculate distance between two points
-  const R = 6371; // Radius of the earth in km
+  const R = 6371;
   const dLat = deg2rad(point2.latitude - point1.latitude);
   const dLon = deg2rad(point2.longitude - point1.longitude);
   const a = 
@@ -342,7 +377,7 @@ function calculateDistance(point1: Coordinates, point2: Coordinates): string {
     Math.cos(deg2rad(point1.latitude)) * Math.cos(deg2rad(point2.latitude)) * 
     Math.sin(dLon/2) * Math.sin(dLon/2); 
   const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a)); 
-  const distance = R * c; // Distance in km
+  const distance = R * c;
   
   return distance.toFixed(1) + " km";
 }

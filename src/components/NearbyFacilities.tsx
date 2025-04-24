@@ -59,7 +59,8 @@ const NearbyFacilities = () => {
   const facilitiesByType = {
     'Hospital': facilities.filter(f => f.type === 'Hospital').slice(0, 20),
     'Medical Shop': facilities.filter(f => f.type === 'Medical Shop').slice(0, 20),
-    'Medical Tent': facilities.filter(f => f.type === 'Medical Tent').slice(0, 20)
+    'Medical Tent': facilities.filter(f => f.type === 'Medical Tent').slice(0, 20),
+    'Ambulance': facilities.filter(f => f.type === 'Ambulance').slice(0, 20)
   };
 
   return (
@@ -88,10 +89,11 @@ const NearbyFacilities = () => {
         </div>
         
         <Tabs defaultValue="Hospital" className="mb-6">
-          <TabsList className="grid w-full grid-cols-3">
+          <TabsList className="grid w-full grid-cols-4">
             <TabsTrigger value="Hospital">Hospitals</TabsTrigger>
             <TabsTrigger value="Medical Shop">Medical Shops</TabsTrigger>
             <TabsTrigger value="Medical Tent">Medical Tents</TabsTrigger>
+            <TabsTrigger value="Ambulance">Ambulances</TabsTrigger>
           </TabsList>
           
           {Object.entries(facilitiesByType).map(([type, typeFacilities]) => (
