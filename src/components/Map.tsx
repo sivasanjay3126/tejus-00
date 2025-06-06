@@ -20,23 +20,22 @@ const Map = ({ latitude, longitude, facilities = [], selectedId }: MapProps) => 
   const [mapUrl, setMapUrl] = useState<string>("");
   
   useEffect(() => {
-    // Create a more reliable static map URL with proper zoom level
     const createMapUrl = () => {
-      // Base URL for Google Maps static image - using a more reliable approach
-      const zoom = facilities.length > 0 ? 13 : 14; // Adjust zoom based on if we're showing facilities
-      let url = `https://maps.googleapis.com/maps/api/staticmap?center=${latitude},${longitude}&zoom=${zoom}&size=640x320&scale=2&maptype=roadmap`;
+      const zoom = facilities.length > 0 ? 11 : 13;
+      let url = `https://maps.googleapis.com/maps/api/staticmap?center=${latitude},${longitude}&zoom=${zoom}&size=640x320&scale=2&maptype=roadmap&style=feature:all|element:geometry|color:0x212121&style=feature:all|element:labels.icon|visibility:off&style=feature:all|element:labels.text.fill|color:0x757575&style=feature:all|element:labels.text.stroke|color:0x212121&style=feature:administrative|element:geometry|color:0x757575&style=feature:landscape|element:geometry|color:0x212121&style=feature:poi|element:geometry|color:0x212121&style=feature:road|element:geometry.fill|color:0x2c2c2c&style=feature:road|element:labels.text.fill|color:0x8a8a8a&style=feature:road.arterial|element:geometry|color:0x373737&style=feature:road.highway|element:geometry|color:0x3c3c3c&style=feature:road.highway.controlled_access|element:geometry|color:0x4e4e4e&style=feature:road.local|element:labels.text.fill|color:0x616161&style=feature:transit|element:labels.text.fill|color:0x757575&style=feature:water|element:geometry|color:0x000000`;
       
-      // Add marker for user's location with a distinct color and label
+      // Add marker for user's location
       url += `&markers=color:red|label:U|${latitude},${longitude}`;
       
-      // Add markers for facilities with proper labels and colors
+      // Add markers for facilities
       facilities.slice(0, 20).forEach((facility, index) => {
         const isSelected = facility.id === selectedId;
         const markerColor = isSelected ? 'green' : 'blue';
-        const label = String.fromCharCode(65 + index); // A, B, C, etc.
+        const label = String.fromCharCode(65 + index);
         url += `&markers=color:${markerColor}|label:${label}|${facility.coordinates.latitude},${facility.coordinates.longitude}`;
       });
       
+      console.log("Map URL created for location:", latitude, longitude);
       setMapUrl(url);
     };
     
@@ -44,7 +43,7 @@ const Map = ({ latitude, longitude, facilities = [], selectedId }: MapProps) => 
   }, [latitude, longitude, facilities, selectedId]);
 
   return (
-    <div className="relative w-full h-64 bg-gray-200 rounded-lg overflow-hidden">
+    <div className="relative w-full h-48 sm:h-64 bg-gray-800 rounded-lg overflow-hidden">
       {mapUrl ? (
         <img 
           src={mapUrl} 
@@ -56,15 +55,15 @@ const Map = ({ latitude, longitude, facilities = [], selectedId }: MapProps) => 
           }}
         />
       ) : (
-        <div className="flex items-center justify-center h-full">
-          <div className="text-center">
+        <div className="flex items-center justify-center h-full bg-gray-800">
+          <div className="text-center text-white">
             <MapPin className="mx-auto h-8 w-8 text-emergency mb-2" />
             <p>Map loading...</p>
           </div>
         </div>
       )}
-      <div className="absolute bottom-2 right-2 bg-white/80 text-xs px-2 py-1 rounded">
-        Coimbatore, Tamil Nadu
+      <div className="absolute bottom-2 right-2 bg-black/70 text-white text-xs px-2 py-1 rounded">
+        Tamil Nadu, India
       </div>
     </div>
   );
