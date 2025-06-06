@@ -90,401 +90,93 @@ export const sendEmergencyMessage = async (imageBlob: Blob, locationDetails: Loc
 
 export const getMedicalFacilities = async (userLocation: Coordinates) => {
   const facilities = [
-    // Chennai District
-    {
-      id: 1,
-      name: "Apollo Hospitals",
-      type: "Hospital",
-      address: "Greams Lane, Off Greams Road, Chennai",
-      phone: "04428296000",
-      distance: calculateDistance(userLocation, { latitude: 13.0661, longitude: 80.2548 }),
-      coordinates: { latitude: 13.0661, longitude: 80.2548 }
-    },
-    {
-      id: 2,
-      name: "Fortis Malar Hospital",
-      type: "Hospital",
-      address: "No. 52, 1st Main Road, Gandhi Nagar, Adyar, Chennai",
-      phone: "04442897500",
-      distance: calculateDistance(userLocation, { latitude: 13.0067, longitude: 80.2570 }),
-      coordinates: { latitude: 13.0067, longitude: 80.2570 }
-    },
-    {
-      id: 3,
-      name: "Chennai Medical Pharmacy",
-      type: "Medical Shop",
-      address: "T. Nagar, Chennai",
-      phone: "04428341234",
-      distance: calculateDistance(userLocation, { latitude: 13.0418, longitude: 80.2341 }),
-      coordinates: { latitude: 13.0418, longitude: 80.2341 }
-    },
-    {
-      id: 4,
-      name: "Chennai Emergency Medical Tent",
-      type: "Medical Tent",
-      address: "Marina Beach, Chennai",
-      phone: "04428345678",
-      distance: calculateDistance(userLocation, { latitude: 13.0475, longitude: 80.2824 }),
-      coordinates: { latitude: 13.0475, longitude: 80.2824 }
-    },
-    {
-      id: 5,
-      name: "Chennai Ambulance Service",
-      type: "Ambulance",
-      address: "Egmore, Chennai",
-      phone: "108",
-      distance: calculateDistance(userLocation, { latitude: 13.0732, longitude: 80.2609 }),
-      coordinates: { latitude: 13.0732, longitude: 80.2609 }
-    },
+    // Chennai District - 15 Hospitals, 10 Medical Shops, 5 Medical Tents, 5 Ambulance Services
+    // Hospitals
+    { id: 1, name: "Apollo Hospitals", type: "Hospital", address: "Greams Lane, Off Greams Road, Chennai", phone: "04428296000", distance: calculateDistance(userLocation, { latitude: 13.0661, longitude: 80.2548 }), coordinates: { latitude: 13.0661, longitude: 80.2548 } },
+    { id: 2, name: "Fortis Malar Hospital", type: "Hospital", address: "No. 52, 1st Main Road, Gandhi Nagar, Adyar, Chennai", phone: "04442897500", distance: calculateDistance(userLocation, { latitude: 13.0067, longitude: 80.2570 }), coordinates: { latitude: 13.0067, longitude: 80.2570 } },
+    { id: 3, name: "Sri Ramachandra Medical Centre", type: "Hospital", address: "Porur, Chennai", phone: "04445928000", distance: calculateDistance(userLocation, { latitude: 13.0358, longitude: 80.1444 }), coordinates: { latitude: 13.0358, longitude: 80.1444 } },
+    { id: 4, name: "MIOT International", type: "Hospital", address: "4/112, Mount Poonamallee Road, Manapakkam, Chennai", phone: "04422496500", distance: calculateDistance(userLocation, { latitude: 13.0147, longitude: 80.1597 }), coordinates: { latitude: 13.0147, longitude: 80.1597 } },
+    { id: 5, name: "Stanley Medical College Hospital", type: "Hospital", address: "Old Jail Road, Royapuram, Chennai", phone: "04425281351", distance: calculateDistance(userLocation, { latitude: 13.1067, longitude: 80.2906 }), coordinates: { latitude: 13.1067, longitude: 80.2906 } },
+    { id: 6, name: "Vijaya Hospital", type: "Hospital", address: "No. 434, N.S.K. Salai, Vadapalani, Chennai", phone: "04442741000", distance: calculateDistance(userLocation, { latitude: 13.0514, longitude: 80.2067 }), coordinates: { latitude: 13.0514, longitude: 80.2067 } },
+    { id: 7, name: "Global Hospitals", type: "Hospital", address: "Cheran Nagar, Perumbakkam, Chennai", phone: "04444777000", distance: calculateDistance(userLocation, { latitude: 12.9165, longitude: 80.2409 }), coordinates: { latitude: 12.9165, longitude: 80.2409 } },
+    { id: 8, name: "Kauvery Hospital", type: "Hospital", address: "Alwarpet, Chennai", phone: "04442612000", distance: calculateDistance(userLocation, { latitude: 13.0344, longitude: 80.2514 }), coordinates: { latitude: 13.0344, longitude: 80.2514 } },
+    { id: 9, name: "Dr. Kamakshi Memorial Hospital", type: "Hospital", address: "No. 1, Radial Road, Pallikaranai, Chennai", phone: "04466801111", distance: calculateDistance(userLocation, { latitude: 12.9716, longitude: 80.2209 }), coordinates: { latitude: 12.9716, longitude: 80.2209 } },
+    { id: 10, name: "Gleneagles Global Health City", type: "Hospital", address: "Perumbakkam, Chennai", phone: "04444961111", distance: calculateDistance(userLocation, { latitude: 12.9165, longitude: 80.2409 }), coordinates: { latitude: 12.9165, longitude: 80.2409 } },
+    { id: 11, name: "Billroth Hospitals", type: "Hospital", address: "43, Lakshmi Talkies Road, Shenoy Nagar, Chennai", phone: "04426441111", distance: calculateDistance(userLocation, { latitude: 13.0732, longitude: 80.2281 }), coordinates: { latitude: 13.0732, longitude: 80.2281 } },
+    { id: 12, name: "Government General Hospital", type: "Hospital", address: "Park Town, Chennai", phone: "04425361721", distance: calculateDistance(userLocation, { latitude: 13.0827, longitude: 80.2707 }), coordinates: { latitude: 13.0827, longitude: 80.2707 } },
+    { id: 13, name: "SIMS Hospital", type: "Hospital", address: "Vadapalani, Chennai", phone: "04442960000", distance: calculateDistance(userLocation, { latitude: 13.0514, longitude: 80.2067 }), coordinates: { latitude: 13.0514, longitude: 80.2067 } },
+    { id: 14, name: "Sankara Nethralaya", type: "Hospital", address: "Nungambakkam, Chennai", phone: "04428271616", distance: calculateDistance(userLocation, { latitude: 13.0569, longitude: 80.2378 }), coordinates: { latitude: 13.0569, longitude: 80.2378 } },
+    { id: 15, name: "Rela Institute", type: "Hospital", address: "Chrompet, Chennai", phone: "04448973535", distance: calculateDistance(userLocation, { latitude: 12.9516, longitude: 80.1462 }), coordinates: { latitude: 12.9516, longitude: 80.1462 } },
 
-    // Coimbatore District
-    {
-      id: 6,
-      name: "Coimbatore Medical College Hospital",
-      type: "Hospital",
-      address: "Trichy Rd, Near Railway Station, Coimbatore",
-      phone: "04222301393",
-      distance: calculateDistance(userLocation, { latitude: 11.0160, longitude: 76.9683 }),
-      coordinates: { latitude: 11.0160, longitude: 76.9683 }
-    },
-    {
-      id: 7,
-      name: "PSG Hospitals",
-      type: "Hospital",
-      address: "Avinashi Road, Peelamedu, Coimbatore",
-      phone: "04224345555",
-      distance: calculateDistance(userLocation, { latitude: 11.0323, longitude: 77.0338 }),
-      coordinates: { latitude: 11.0323, longitude: 77.0338 }
-    },
-    {
-      id: 8,
-      name: "Coimbatore Medical Shop",
-      type: "Medical Shop",
-      address: "Gandhipuram, Coimbatore",
-      phone: "04222434567",
-      distance: calculateDistance(userLocation, { latitude: 11.0152, longitude: 76.9567 }),
-      coordinates: { latitude: 11.0152, longitude: 76.9567 }
-    },
-    {
-      id: 9,
-      name: "Coimbatore Medical Tent",
-      type: "Medical Tent",
-      address: "100 Feet Road, Gandhipuram, Coimbatore",
-      phone: "04222454321",
-      distance: calculateDistance(userLocation, { latitude: 11.0175, longitude: 76.9531 }),
-      coordinates: { latitude: 11.0175, longitude: 76.9531 }
-    },
-    {
-      id: 10,
-      name: "Coimbatore Ambulance Service",
-      type: "Ambulance",
-      address: "RS Puram, Coimbatore",
-      phone: "108",
-      distance: calculateDistance(userLocation, { latitude: 11.0082, longitude: 76.9629 }),
-      coordinates: { latitude: 11.0082, longitude: 76.9629 }
-    },
+    // Medical Shops
+    { id: 16, name: "Apollo Pharmacy", type: "Medical Shop", address: "T. Nagar, Chennai", phone: "04428341234", distance: calculateDistance(userLocation, { latitude: 13.0418, longitude: 80.2341 }), coordinates: { latitude: 13.0418, longitude: 80.2341 } },
+    { id: 17, name: "MedPlus Pharmacy", type: "Medical Shop", address: "Adyar, Chennai", phone: "04424473456", distance: calculateDistance(userLocation, { latitude: 13.0067, longitude: 80.2570 }), coordinates: { latitude: 13.0067, longitude: 80.2570 } },
+    { id: 18, name: "1mg Store", type: "Medical Shop", address: "Velachery, Chennai", phone: "04422345678", distance: calculateDistance(userLocation, { latitude: 12.9784, longitude: 80.2206 }), coordinates: { latitude: 12.9784, longitude: 80.2206 } },
+    { id: 19, name: "Wellness Forever", type: "Medical Shop", address: "Mylapore, Chennai", phone: "04424561234", distance: calculateDistance(userLocation, { latitude: 13.0331, longitude: 80.2707 }), coordinates: { latitude: 13.0331, longitude: 80.2707 } },
+    { id: 20, name: "Guardian Pharmacy", type: "Medical Shop", address: "Anna Nagar, Chennai", phone: "04426234567", distance: calculateDistance(userLocation, { latitude: 13.0850, longitude: 80.2101 }), coordinates: { latitude: 13.0850, longitude: 80.2101 } },
+    { id: 21, name: "Netmeds Store", type: "Medical Shop", address: "Porur, Chennai", phone: "04426712345", distance: calculateDistance(userLocation, { latitude: 13.0358, longitude: 80.1444 }), coordinates: { latitude: 13.0358, longitude: 80.1444 } },
+    { id: 22, name: "PharmEasy Store", type: "Medical Shop", address: "Tambaram, Chennai", phone: "04422234567", distance: calculateDistance(userLocation, { latitude: 12.9249, longitude: 80.1000 }), coordinates: { latitude: 12.9249, longitude: 80.1000 } },
+    { id: 23, name: "Fortis Pharmacy", type: "Medical Shop", address: "Vadapalani, Chennai", phone: "04424456789", distance: calculateDistance(userLocation, { latitude: 13.0514, longitude: 80.2067 }), coordinates: { latitude: 13.0514, longitude: 80.2067 } },
+    { id: 24, name: "LifeCare Pharmacy", type: "Medical Shop", address: "Chrompet, Chennai", phone: "04424567890", distance: calculateDistance(userLocation, { latitude: 12.9516, longitude: 80.1462 }), coordinates: { latitude: 12.9516, longitude: 80.1462 } },
+    { id: 25, name: "Medical Trust Pharmacy", type: "Medical Shop", address: "Egmore, Chennai", phone: "04428345678", distance: calculateDistance(userLocation, { latitude: 13.0732, longitude: 80.2609 }), coordinates: { latitude: 13.0732, longitude: 80.2609 } },
 
-    // Madurai District
-    {
-      id: 11,
-      name: "Madurai Medical College Hospital",
-      type: "Hospital",
-      address: "Panagal Road, Madurai",
-      phone: "04522321200",
-      distance: calculateDistance(userLocation, { latitude: 9.9195, longitude: 78.1193 }),
-      coordinates: { latitude: 9.9195, longitude: 78.1193 }
-    },
-    {
-      id: 12,
-      name: "Apollo Specialty Hospital Madurai",
-      type: "Hospital",
-      address: "Lake View Road, KK Nagar, Madurai",
-      phone: "04524560000",
-      distance: calculateDistance(userLocation, { latitude: 9.9312, longitude: 78.1188 }),
-      coordinates: { latitude: 9.9312, longitude: 78.1188 }
-    },
-    {
-      id: 13,
-      name: "Madurai Pharmacy Plus",
-      type: "Medical Shop",
-      address: "Anna Nagar, Madurai",
-      phone: "04522345678",
-      distance: calculateDistance(userLocation, { latitude: 9.9252, longitude: 78.1198 }),
-      coordinates: { latitude: 9.9252, longitude: 78.1198 }
-    },
-    {
-      id: 14,
-      name: "Madurai Medical Tent",
-      type: "Medical Tent",
-      address: "Meenakshi Temple Area, Madurai",
-      phone: "04522567890",
-      distance: calculateDistance(userLocation, { latitude: 9.9195, longitude: 78.1193 }),
-      coordinates: { latitude: 9.9195, longitude: 78.1193 }
-    },
-    {
-      id: 15,
-      name: "Madurai Emergency Ambulance",
-      type: "Ambulance",
-      address: "Anna Nagar, Madurai",
-      phone: "108",
-      distance: calculateDistance(userLocation, { latitude: 9.9252, longitude: 78.1198 }),
-      coordinates: { latitude: 9.9252, longitude: 78.1198 }
-    },
+    // Medical Tents
+    { id: 26, name: "Marina Beach Medical Tent", type: "Medical Tent", address: "Marina Beach, Chennai", phone: "04428345678", distance: calculateDistance(userLocation, { latitude: 13.0475, longitude: 80.2824 }), coordinates: { latitude: 13.0475, longitude: 80.2824 } },
+    { id: 27, name: "Central Railway Station Medical Tent", type: "Medical Tent", address: "Chennai Central, Chennai", phone: "04425361234", distance: calculateDistance(userLocation, { latitude: 13.0827, longitude: 80.2707 }), coordinates: { latitude: 13.0827, longitude: 80.2707 } },
+    { id: 28, name: "Airport Medical Tent", type: "Medical Tent", address: "Chennai Airport, Chennai", phone: "04422561234", distance: calculateDistance(userLocation, { latitude: 12.9941, longitude: 80.1709 }), coordinates: { latitude: 12.9941, longitude: 80.1709 } },
+    { id: 29, name: "CMBT Medical Tent", type: "Medical Tent", address: "Koyambedu, Chennai", phone: "04423451234", distance: calculateDistance(userLocation, { latitude: 13.0732, longitude: 80.1986 }), coordinates: { latitude: 13.0732, longitude: 80.1986 } },
+    { id: 30, name: "Express Avenue Medical Tent", type: "Medical Tent", address: "Royapettah, Chennai", phone: "04428567234", distance: calculateDistance(userLocation, { latitude: 13.0569, longitude: 80.2607 }), coordinates: { latitude: 13.0569, longitude: 80.2607 } },
 
-    // Salem District
-    {
-      id: 16,
-      name: "Salem Government Hospital",
-      type: "Hospital",
-      address: "Omalur Main Road, Salem",
-      phone: "04272414142",
-      distance: calculateDistance(userLocation, { latitude: 11.6643, longitude: 78.1460 }),
-      coordinates: { latitude: 11.6643, longitude: 78.1460 }
-    },
-    {
-      id: 17,
-      name: "Manipal Hospital Salem",
-      type: "Hospital",
-      address: "Dalmia Board, Salem",
-      phone: "04272212000",
-      distance: calculateDistance(userLocation, { latitude: 11.6596, longitude: 78.1617 }),
-      coordinates: { latitude: 11.6596, longitude: 78.1617 }
-    },
-    {
-      id: 18,
-      name: "Salem Medical Store",
-      type: "Medical Shop",
-      address: "Cherry Road, Salem",
-      phone: "04272234567",
-      distance: calculateDistance(userLocation, { latitude: 11.6643, longitude: 78.1460 }),
-      coordinates: { latitude: 11.6643, longitude: 78.1460 }
-    },
-    {
-      id: 19,
-      name: "Salem Medical Tent",
-      type: "Medical Tent",
-      address: "Bus Stand Area, Salem",
-      phone: "04272345678",
-      distance: calculateDistance(userLocation, { latitude: 11.6643, longitude: 78.1460 }),
-      coordinates: { latitude: 11.6643, longitude: 78.1460 }
-    },
-    {
-      id: 20,
-      name: "Salem Ambulance Service",
-      type: "Ambulance",
-      address: "Government Hospital, Salem",
-      phone: "108",
-      distance: calculateDistance(userLocation, { latitude: 11.6643, longitude: 78.1460 }),
-      coordinates: { latitude: 11.6643, longitude: 78.1460 }
-    },
+    // Ambulance Services
+    { id: 31, name: "Chennai 108 Ambulance", type: "Ambulance", address: "Egmore, Chennai", phone: "108", distance: calculateDistance(userLocation, { latitude: 13.0732, longitude: 80.2609 }), coordinates: { latitude: 13.0732, longitude: 80.2609 } },
+    { id: 32, name: "Apollo Emergency Ambulance", type: "Ambulance", address: "Greams Road, Chennai", phone: "04428296000", distance: calculateDistance(userLocation, { latitude: 13.0661, longitude: 80.2548 }), coordinates: { latitude: 13.0661, longitude: 80.2548 } },
+    { id: 33, name: "Fortis Emergency Service", type: "Ambulance", address: "Adyar, Chennai", phone: "04442897500", distance: calculateDistance(userLocation, { latitude: 13.0067, longitude: 80.2570 }), coordinates: { latitude: 13.0067, longitude: 80.2570 } },
+    { id: 34, name: "Chennai City Ambulance", type: "Ambulance", address: "T.Nagar, Chennai", phone: "04424563456", distance: calculateDistance(userLocation, { latitude: 13.0418, longitude: 80.2341 }), coordinates: { latitude: 13.0418, longitude: 80.2341 } },
+    { id: 35, name: "Emergency Medical Response", type: "Ambulance", address: "Anna Nagar, Chennai", phone: "04426789012", distance: calculateDistance(userLocation, { latitude: 13.0850, longitude: 80.2101 }), coordinates: { latitude: 13.0850, longitude: 80.2101 } },
 
-    // Tiruchirappalli District
-    {
-      id: 21,
-      name: "Mahatma Gandhi Memorial Government Hospital",
-      type: "Hospital",
-      address: "Collector Office Road, Tiruchirappalli",
-      phone: "04312414142",
-      distance: calculateDistance(userLocation, { latitude: 10.7905, longitude: 78.7047 }),
-      coordinates: { latitude: 10.7905, longitude: 78.7047 }
-    },
-    {
-      id: 22,
-      name: "Apollo Specialty Hospital Trichy",
-      type: "Hospital",
-      address: "Chathram Bus Stand, Tiruchirappalli",
-      phone: "04314525000",
-      distance: calculateDistance(userLocation, { latitude: 10.8155, longitude: 78.6856 }),
-      coordinates: { latitude: 10.8155, longitude: 78.6856 }
-    },
-    {
-      id: 23,
-      name: "Trichy Medical Shop",
-      type: "Medical Shop",
-      address: "Thillai Nagar, Tiruchirappalli",
-      phone: "04312345678",
-      distance: calculateDistance(userLocation, { latitude: 10.7905, longitude: 78.7047 }),
-      coordinates: { latitude: 10.7905, longitude: 78.7047 }
-    },
-    {
-      id: 24,
-      name: "Trichy Medical Tent",
-      type: "Medical Tent",
-      address: "Central Bus Stand, Tiruchirappalli",
-      phone: "04312456789",
-      distance: calculateDistance(userLocation, { latitude: 10.7905, longitude: 78.7047 }),
-      coordinates: { latitude: 10.7905, longitude: 78.7047 }
-    },
-    {
-      id: 25,
-      name: "Trichy Emergency Ambulance",
-      type: "Ambulance",
-      address: "Government Hospital, Tiruchirappalli",
-      phone: "108",
-      distance: calculateDistance(userLocation, { latitude: 10.7905, longitude: 78.7047 }),
-      coordinates: { latitude: 10.7905, longitude: 78.7047 }
-    },
+    // Coimbatore District - 15 Hospitals, 10 Medical Shops, 5 Medical Tents, 5 Ambulance Services
+    // Hospitals
+    { id: 36, name: "Coimbatore Medical College Hospital", type: "Hospital", address: "Trichy Rd, Near Railway Station, Coimbatore", phone: "04222301393", distance: calculateDistance(userLocation, { latitude: 11.0160, longitude: 76.9683 }), coordinates: { latitude: 11.0160, longitude: 76.9683 } },
+    { id: 37, name: "PSG Hospitals", type: "Hospital", address: "Avinashi Road, Peelamedu, Coimbatore", phone: "04224345555", distance: calculateDistance(userLocation, { latitude: 11.0323, longitude: 77.0338 }), coordinates: { latitude: 11.0323, longitude: 77.0338 } },
+    { id: 38, name: "Kovai Medical Center", type: "Hospital", address: "Avinashi Road, Coimbatore", phone: "04224324100", distance: calculateDistance(userLocation, { latitude: 11.0323, longitude: 77.0338 }), coordinates: { latitude: 11.0323, longitude: 77.0338 } },
+    { id: 39, name: "Ganga Hospital", type: "Hospital", address: "313, Mettupalayam Road, Coimbatore", phone: "04222424444", distance: calculateDistance(userLocation, { latitude: 11.0168, longitude: 77.0073 }), coordinates: { latitude: 11.0168, longitude: 77.0073 } },
+    { id: 40, name: "Royal Care Hospital", type: "Hospital", address: "Sathy Road, Coimbatore", phone: "04222567890", distance: calculateDistance(userLocation, { latitude: 11.0501, longitude: 76.9969 }), coordinates: { latitude: 11.0501, longitude: 76.9969 } },
+    { id: 41, name: "Gem Hospital", type: "Hospital", address: "45-A, Pankaja Mill Road, Coimbatore", phone: "04222324900", distance: calculateDistance(userLocation, { latitude: 11.0168, longitude: 76.9558 }), coordinates: { latitude: 11.0168, longitude: 76.9558 } },
+    { id: 42, name: "Sri Abirami Hospital", type: "Hospital", address: "Gandhipuram, Coimbatore", phone: "04222431100", distance: calculateDistance(userLocation, { latitude: 11.0152, longitude: 76.9567 }), coordinates: { latitude: 11.0152, longitude: 76.9567 } },
+    { id: 43, name: "Sheela Hospital", type: "Hospital", address: "Saibaba Colony, Coimbatore", phone: "04224351100", distance: calculateDistance(userLocation, { latitude: 11.0168, longitude: 77.0073 }), coordinates: { latitude: 11.0168, longitude: 77.0073 } },
+    { id: 44, name: "KMCH Hospital", type: "Hospital", address: "Dr. KM Cherian Street, Coimbatore", phone: "04224324100", distance: calculateDistance(userLocation, { latitude: 11.0323, longitude: 77.0338 }), coordinates: { latitude: 11.0323, longitude: 77.0338 } },
+    { id: 45, name: "Ramesh Hospital", type: "Hospital", address: "Cross Cut Road, Coimbatore", phone: "04222421000", distance: calculateDistance(userLocation, { latitude: 11.0152, longitude: 76.9567 }), coordinates: { latitude: 11.0152, longitude: 76.9567 } },
+    { id: 46, name: "CK Hospital", type: "Hospital", address: "R.S. Puram, Coimbatore", phone: "04224361000", distance: calculateDistance(userLocation, { latitude: 11.0082, longitude: 76.9629 }), coordinates: { latitude: 11.0082, longitude: 76.9629 } },
+    { id: 47, name: "NG Hospital", type: "Hospital", address: "Coimbatore", phone: "04222341234", distance: calculateDistance(userLocation, { latitude: 11.0168, longitude: 76.9558 }), coordinates: { latitude: 11.0168, longitude: 76.9558 } },
+    { id: 48, name: "Lotus Hospital", type: "Hospital", address: "Lakshmi Mills, Coimbatore", phone: "04222345678", distance: calculateDistance(userLocation, { latitude: 11.0152, longitude: 76.9567 }), coordinates: { latitude: 11.0152, longitude: 76.9567 } },
+    { id: 49, name: "G. Kuppuswamy Naidu Memorial Hospital", type: "Hospital", address: "Nethaji Road, Coimbatore", phone: "04222324324", distance: calculateDistance(userLocation, { latitude: 11.0168, longitude: 76.9558 }), coordinates: { latitude: 11.0168, longitude: 76.9558 } },
+    { id: 50, name: "Coimbatore Government Hospital", type: "Hospital", address: "Government Hospital Road, Coimbatore", phone: "04222414142", distance: calculateDistance(userLocation, { latitude: 11.0160, longitude: 76.9683 }), coordinates: { latitude: 11.0160, longitude: 76.9683 } },
 
-    // Tirunelveli District
-    {
-      id: 26,
-      name: "Tirunelveli Medical College Hospital",
-      type: "Hospital",
-      address: "Tirunelveli Medical College Road, Tirunelveli",
-      phone: "04622327123",
-      distance: calculateDistance(userLocation, { latitude: 8.7139, longitude: 77.7567 }),
-      coordinates: { latitude: 8.7139, longitude: 77.7567 }
-    },
-    {
-      id: 27,
-      name: "CSI Mission Hospital",
-      type: "Hospital",
-      address: "CSI Compound, Tirunelveli",
-      phone: "04622321234",
-      distance: calculateDistance(userLocation, { latitude: 8.7285, longitude: 77.6918 }),
-      coordinates: { latitude: 8.7285, longitude: 77.6918 }
-    },
-    {
-      id: 28,
-      name: "Tirunelveli Pharmacy",
-      type: "Medical Shop",
-      address: "Town Hall Road, Tirunelveli",
-      phone: "04622234567",
-      distance: calculateDistance(userLocation, { latitude: 8.7139, longitude: 77.7567 }),
-      coordinates: { latitude: 8.7139, longitude: 77.7567 }
-    },
-    {
-      id: 29,
-      name: "Tirunelveli Medical Tent",
-      type: "Medical Tent",
-      address: "Bus Stand Area, Tirunelveli",
-      phone: "04622345678",
-      distance: calculateDistance(userLocation, { latitude: 8.7139, longitude: 77.7567 }),
-      coordinates: { latitude: 8.7139, longitude: 77.7567 }
-    },
-    {
-      id: 30,
-      name: "Tirunelveli Ambulance Service",
-      type: "Ambulance",
-      address: "Medical College, Tirunelveli",
-      phone: "108",
-      distance: calculateDistance(userLocation, { latitude: 8.7139, longitude: 77.7567 }),
-      coordinates: { latitude: 8.7139, longitude: 77.7567 }
-    },
+    // Medical Shops (Coimbatore)
+    { id: 51, name: "Apollo Pharmacy Coimbatore", type: "Medical Shop", address: "Gandhipuram, Coimbatore", phone: "04222434567", distance: calculateDistance(userLocation, { latitude: 11.0152, longitude: 76.9567 }), coordinates: { latitude: 11.0152, longitude: 76.9567 } },
+    { id: 52, name: "MedPlus Coimbatore", type: "Medical Shop", address: "RS Puram, Coimbatore", phone: "04222445678", distance: calculateDistance(userLocation, { latitude: 11.0082, longitude: 76.9629 }), coordinates: { latitude: 11.0082, longitude: 76.9629 } },
+    { id: 53, name: "Wellness Pharmacy", type: "Medical Shop", address: "Peelamedu, Coimbatore", phone: "04222456789", distance: calculateDistance(userLocation, { latitude: 11.0323, longitude: 77.0338 }), coordinates: { latitude: 11.0323, longitude: 77.0338 } },
+    { id: 54, name: "Guardian Chemist", type: "Medical Shop", address: "Saibaba Colony, Coimbatore", phone: "04222467890", distance: calculateDistance(userLocation, { latitude: 11.0168, longitude: 77.0073 }), coordinates: { latitude: 11.0168, longitude: 77.0073 } },
+    { id: 55, name: "LifeCare Medical", type: "Medical Shop", address: "Sathy Road, Coimbatore", phone: "04222478901", distance: calculateDistance(userLocation, { latitude: 11.0501, longitude: 76.9969 }), coordinates: { latitude: 11.0501, longitude: 76.9969 } },
+    { id: 56, name: "City Medical Store", type: "Medical Shop", address: "Cross Cut Road, Coimbatore", phone: "04222489012", distance: calculateDistance(userLocation, { latitude: 11.0152, longitude: 76.9567 }), coordinates: { latitude: 11.0152, longitude: 76.9567 } },
+    { id: 57, name: "Health Plus Pharmacy", type: "Medical Shop", address: "Avinashi Road, Coimbatore", phone: "04222490123", distance: calculateDistance(userLocation, { latitude: 11.0323, longitude: 77.0338 }), coordinates: { latitude: 11.0323, longitude: 77.0338 } },
+    { id: 58, name: "Medical Trust", type: "Medical Shop", address: "Trichy Road, Coimbatore", phone: "04222501234", distance: calculateDistance(userLocation, { latitude: 11.0160, longitude: 76.9683 }), coordinates: { latitude: 11.0160, longitude: 76.9683 } },
+    { id: 59, name: "Care Plus Pharmacy", type: "Medical Shop", address: "Race Course, Coimbatore", phone: "04222512345", distance: calculateDistance(userLocation, { latitude: 11.0037, longitude: 76.9644 }), coordinates: { latitude: 11.0037, longitude: 76.9644 } },
+    { id: 60, name: "Metro Pharmacy", type: "Medical Shop", address: "Brookefields Mall, Coimbatore", phone: "04222523456", distance: calculateDistance(userLocation, { latitude: 11.0323, longitude: 77.0338 }), coordinates: { latitude: 11.0323, longitude: 77.0338 } },
 
-    // Erode District
-    {
-      id: 31,
-      name: "Erode Government Hospital",
-      type: "Hospital",
-      address: "Collectorate Road, Erode",
-      phone: "04242414142",
-      distance: calculateDistance(userLocation, { latitude: 11.3410, longitude: 77.7172 }),
-      coordinates: { latitude: 11.3410, longitude: 77.7172 }
-    },
-    {
-      id: 32,
-      name: "Erode Medical Store",
-      type: "Medical Shop",
-      address: "Perundurai Road, Erode",
-      phone: "04242234567",
-      distance: calculateDistance(userLocation, { latitude: 11.3410, longitude: 77.7172 }),
-      coordinates: { latitude: 11.3410, longitude: 77.7172 }
-    },
-    {
-      id: 33,
-      name: "Erode Medical Tent",
-      type: "Medical Tent",
-      address: "Bus Stand, Erode",
-      phone: "04242345678",
-      distance: calculateDistance(userLocation, { latitude: 11.3410, longitude: 77.7172 }),
-      coordinates: { latitude: 11.3410, longitude: 77.7172 }
-    },
-    {
-      id: 34,
-      name: "Erode Ambulance Service",
-      type: "Ambulance",
-      address: "Government Hospital, Erode",
-      phone: "108",
-      distance: calculateDistance(userLocation, { latitude: 11.3410, longitude: 77.7172 }),
-      coordinates: { latitude: 11.3410, longitude: 77.7172 }
-    },
+    // Medical Tents (Coimbatore)
+    { id: 61, name: "Coimbatore Railway Medical Tent", type: "Medical Tent", address: "Railway Station, Coimbatore", phone: "04222454321", distance: calculateDistance(userLocation, { latitude: 11.0160, longitude: 76.9683 }), coordinates: { latitude: 11.0160, longitude: 76.9683 } },
+    { id: 62, name: "Gandhipuram Medical Tent", type: "Medical Tent", address: "100 Feet Road, Gandhipuram, Coimbatore", phone: "04222465432", distance: calculateDistance(userLocation, { latitude: 11.0175, longitude: 76.9531 }), coordinates: { latitude: 11.0175, longitude: 76.9531 } },
+    { id: 63, name: "Airport Medical Tent", type: "Medical Tent", address: "Coimbatore Airport", phone: "04222476543", distance: calculateDistance(userLocation, { latitude: 11.0297, longitude: 77.0436 }), coordinates: { latitude: 11.0297, longitude: 77.0436 } },
+    { id: 64, name: "CODISSIA Medical Tent", type: "Medical Tent", address: "CODISSIA Complex, Coimbatore", phone: "04222487654", distance: calculateDistance(userLocation, { latitude: 11.0323, longitude: 77.0338 }), coordinates: { latitude: 11.0323, longitude: 77.0338 } },
+    { id: 65, name: "Singanallur Medical Tent", type: "Medical Tent", address: "Singanallur, Coimbatore", phone: "04222498765", distance: calculateDistance(userLocation, { latitude: 11.0037, longitude: 77.0297 }), coordinates: { latitude: 11.0037, longitude: 77.0297 } },
 
-    // Vellore District
-    {
-      id: 35,
-      name: "Christian Medical College Vellore",
-      type: "Hospital",
-      address: "Ida Scudder Road, Vellore",
-      phone: "04162282020",
-      distance: calculateDistance(userLocation, { latitude: 12.9249, longitude: 79.1363 }),
-      coordinates: { latitude: 12.9249, longitude: 79.1363 }
-    },
-    {
-      id: 36,
-      name: "Vellore Medical Store",
-      type: "Medical Shop",
-      address: "Officer's Line, Vellore",
-      phone: "04162234567",
-      distance: calculateDistance(userLocation, { latitude: 12.9165, longitude: 79.1325 }),
-      coordinates: { latitude: 12.9165, longitude: 79.1325 }
-    },
-    {
-      id: 37,
-      name: "Vellore Medical Tent",
-      type: "Medical Tent",
-      address: "Bus Stand Area, Vellore",
-      phone: "04162345678",
-      distance: calculateDistance(userLocation, { latitude: 12.9165, longitude: 79.1325 }),
-      coordinates: { latitude: 12.9165, longitude: 79.1325 }
-    },
-    {
-      id: 38,
-      name: "Vellore Ambulance Service",
-      type: "Ambulance",
-      address: "CMC Hospital, Vellore",
-      phone: "108",
-      distance: calculateDistance(userLocation, { latitude: 12.9249, longitude: 79.1363 }),
-      coordinates: { latitude: 12.9249, longitude: 79.1363 }
-    },
-
-    // Thanjavur District
-    {
-      id: 39,
-      name: "Thanjavur Medical College Hospital",
-      type: "Hospital",
-      address: "Medical College Road, Thanjavur",
-      phone: "04362414142",
-      distance: calculateDistance(userLocation, { latitude: 10.7870, longitude: 79.1378 }),
-      coordinates: { latitude: 10.7870, longitude: 79.1378 }
-    },
-    {
-      id: 40,
-      name: "Thanjavur Medical Shop",
-      type: "Medical Shop",
-      address: "South Main Street, Thanjavur",
-      phone: "04362234567",
-      distance: calculateDistance(userLocation, { latitude: 10.7870, longitude: 79.1378 }),
-      coordinates: { latitude: 10.7870, longitude: 79.1378 }
-    },
-    {
-      id: 41,
-      name: "Thanjavur Medical Tent",
-      type: "Medical Tent",
-      address: "Big Temple Area, Thanjavur",
-      phone: "04362345678",
-      distance: calculateDistance(userLocation, { latitude: 10.7870, longitude: 79.1378 }),
-      coordinates: { latitude: 10.7870, longitude: 79.1378 }
-    },
-    {
-      id: 42,
-      name: "Thanjavur Ambulance Service",
-      type: "Ambulance",
-      address: "Medical College, Thanjavur",
-      phone: "108",
-      distance: calculateDistance(userLocation, { latitude: 10.7870, longitude: 79.1378 }),
-      coordinates: { latitude: 10.7870, longitude: 79.1378 }
-    }
+    // Ambulance Services (Coimbatore)
+    { id: 66, name: "Coimbatore 108 Ambulance", type: "Ambulance", address: "RS Puram, Coimbatore", phone: "108", distance: calculateDistance(userLocation, { latitude: 11.0082, longitude: 76.9629 }), coordinates: { latitude: 11.0082, longitude: 76.9629 } },
+    { id: 67, name: "PSG Emergency Ambulance", type: "Ambulance", address: "Peelamedu, Coimbatore", phone: "04224345555", distance: calculateDistance(userLocation, { latitude: 11.0323, longitude: 77.0338 }), coordinates: { latitude: 11.0323, longitude: 77.0338 } },
+    { id: 68, name: "KMC Emergency Service", type: "Ambulance", address: "Avinashi Road, Coimbatore", phone: "04224324100", distance: calculateDistance(userLocation, { latitude: 11.0323, longitude: 77.0338 }), coordinates: { latitude: 11.0323, longitude: 77.0338 } },
+    { id: 69, name: "Ganga Ambulance Service", type: "Ambulance", address: "Mettupalayam Road, Coimbatore", phone: "04222424444", distance: calculateDistance(userLocation, { latitude: 11.0168, longitude: 77.0073 }), coordinates: { latitude: 11.0168, longitude: 77.0073 } },
+    { id: 70, name: "City Emergency Response", type: "Ambulance", address: "Gandhipuram, Coimbatore", phone: "04222567123", distance: calculateDistance(userLocation, { latitude: 11.0152, longitude: 76.9567 }), coordinates: { latitude: 11.0152, longitude: 76.9567 } }
   ];
   
   return facilities.sort((a, b) => parseFloat(a.distance) - parseFloat(b.distance));
