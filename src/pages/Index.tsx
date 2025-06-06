@@ -1,8 +1,8 @@
-
 import React from 'react';
 import EmergencyHeader from '@/components/EmergencyHeader';
 import SnapToSaveButton from '@/components/SnapToSaveButton';
 import GoToSaveButton from '@/components/GoToSaveButton';
+import SMSToSaveButton from '@/components/SMSToSaveButton';
 import FirstAidVideos from '@/components/FirstAidVideos';
 import { Phone, MapPin } from 'lucide-react';
 
@@ -31,6 +31,7 @@ const Index = () => {
           <div className="space-y-4">
             <SnapToSaveButton />
             <GoToSaveButton />
+            <SMSToSaveButton />
           </div>
         </div>
         
