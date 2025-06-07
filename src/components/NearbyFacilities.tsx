@@ -8,6 +8,8 @@ import Map from './Map';
 import FirstAidVideos from './FirstAidVideos';
 import { useNavigate } from 'react-router-dom';
 import { toast } from 'sonner';
+import { useLanguage } from '@/contexts/LanguageContext';
+import LanguageSelector from './LanguageSelector';
 
 interface Facility {
   id: number;
@@ -25,9 +27,10 @@ interface Facility {
 const NearbyFacilities = () => {
   const [facilities, setFacilities] = useState<Facility[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
-  const [userLocation, setUserLocation] = useState({ latitude: 13.0827, longitude: 80.2707 }); // Default Chennai coordinates
+  const [userLocation, setUserLocation] = useState({ latitude: 13.0827, longitude: 80.2707 });
   const [selectedFacility, setSelectedFacility] = useState<number | undefined>(undefined);
   const navigate = useNavigate();
+  const { t } = useLanguage();
 
   useEffect(() => {
     const loadData = async () => {
@@ -77,7 +80,8 @@ const NearbyFacilities = () => {
         <Button variant="ghost" size="icon" onClick={() => navigate('/')} className="text-white hover:bg-white/20">
           <ArrowLeft />
         </Button>
-        <h1 className="text-lg sm:text-xl font-bold ml-2 flex-1 text-center">TEJUS - Medical Help Across Tamil Nadu</h1>
+        <h1 className="text-lg sm:text-xl font-bold ml-2 flex-1 text-center">{t('nearby.title')}</h1>
+        <LanguageSelector />
       </div>
       
       <div className="flex-1 overflow-auto pb-4">
@@ -92,24 +96,24 @@ const NearbyFacilities = () => {
             <div className="bg-gray-800 p-3 rounded-b-lg shadow-md -mt-1 border-t border-gray-700">
               <p className="text-sm flex items-center text-gray-300">
                 <MapPin size={16} className="mr-1 text-emergency" />
-                <span>Showing medical facilities across Tamil Nadu</span>
+                <span>{t('nearby.showing')}</span>
               </p>
             </div>
           </div>
           
           <Tabs defaultValue="Hospital" className="mb-4 sm:mb-6">
             <TabsList className="grid w-full grid-cols-2 sm:grid-cols-4 bg-gray-800 text-white">
-              <TabsTrigger value="Hospital" className="text-xs sm:text-sm data-[state=active]:bg-primary_blue">Hospitals</TabsTrigger>
-              <TabsTrigger value="Medical Shop" className="text-xs sm:text-sm data-[state=active]:bg-primary_blue">Shops</TabsTrigger>
-              <TabsTrigger value="Medical Tent" className="text-xs sm:text-sm data-[state=active]:bg-primary_blue">Tents</TabsTrigger>
-              <TabsTrigger value="Ambulance" className="text-xs sm:text-sm data-[state=active]:bg-primary_blue">Ambulance</TabsTrigger>
+              <TabsTrigger value="Hospital" className="text-xs sm:text-sm data-[state=active]:bg-primary_blue">{t('nearby.hospitals')}</TabsTrigger>
+              <TabsTrigger value="Medical Shop" className="text-xs sm:text-sm data-[state=active]:bg-primary_blue">{t('nearby.shops')}</TabsTrigger>
+              <TabsTrigger value="Medical Tent" className="text-xs sm:text-sm data-[state=active]:bg-primary_blue">{t('nearby.tents')}</TabsTrigger>
+              <TabsTrigger value="Ambulance" className="text-xs sm:text-sm data-[state=active]:bg-primary_blue">{t('nearby.ambulance')}</TabsTrigger>
             </TabsList>
             
             {Object.entries(facilitiesByType).map(([type, typeFacilities]) => (
               <TabsContent key={type} value={type} className="mt-4">
                 <h2 className="text-lg font-semibold mb-3 flex items-center text-white">
                   <Hospital size={18} className="mr-2 text-primary_blue" />
-                  Nearby {type}s
+                  {t('nearby.' + type.toLowerCase().replace(' ', ''))}s
                 </h2>
                 
                 {loading ? (
@@ -150,7 +154,7 @@ const NearbyFacilities = () => {
                               }}
                             >
                               <Phone size={14} />
-                              <span className="text-xs sm:text-sm">Call</span>
+                              <span className="text-xs sm:text-sm">{t('nearby.call')}</span>
                             </Button>
                             <Button 
                               size="sm" 
@@ -161,7 +165,7 @@ const NearbyFacilities = () => {
                               }}
                             >
                               <ArrowRight size={14} />
-                              <span className="text-xs sm:text-sm">Directions</span>
+                              <span className="text-xs sm:text-sm">{t('nearby.directions')}</span>
                             </Button>
                           </div>
                         </div>
@@ -170,7 +174,7 @@ const NearbyFacilities = () => {
                   </div>
                 ) : (
                   <div className="text-center p-10 bg-gray-800 rounded-lg">
-                    <p className="text-gray-400">No {type}s found nearby</p>
+                    <p className="text-gray-400">No {type}s {t('nearby.noFacilities')}</p>
                   </div>
                 )}
               </TabsContent>

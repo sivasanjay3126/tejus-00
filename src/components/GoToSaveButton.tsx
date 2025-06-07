@@ -2,9 +2,11 @@
 import React from 'react';
 import { MapPin } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
+import { useLanguage } from '@/contexts/LanguageContext';
 
 const GoToSaveButton = () => {
   const navigate = useNavigate();
+  const { t } = useLanguage();
 
   const handleClick = () => {
     navigate('/nearby');
@@ -17,7 +19,7 @@ const GoToSaveButton = () => {
       aria-label="Go to Save - Find medical facilities across India"
     >
       <MapPin size={28} />
-      <span className="text-lg font-medium">Go to Save</span>
+      <span className="text-lg font-medium">{t('main.goToSave')}</span>
     </button>
   );
 };

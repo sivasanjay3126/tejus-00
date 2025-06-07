@@ -2,9 +2,11 @@
 import React from 'react';
 import { MessageSquare } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
+import { useLanguage } from '@/contexts/LanguageContext';
 
 const SMSToSaveButton = () => {
   const navigate = useNavigate();
+  const { t } = useLanguage();
 
   const handleClick = () => {
     navigate('/sms-capture');
@@ -17,7 +19,7 @@ const SMSToSaveButton = () => {
       aria-label="SMS to Save - Send emergency SMS with photo offline"
     >
       <MessageSquare size={28} />
-      <span className="text-lg font-medium">SMS to Save</span>
+      <span className="text-lg font-medium">{t('main.smsToSave')}</span>
     </button>
   );
 };

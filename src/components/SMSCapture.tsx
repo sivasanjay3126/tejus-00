@@ -5,6 +5,8 @@ import { Button } from '@/components/ui/button';
 import { toast } from "sonner";
 import { useNavigate } from 'react-router-dom';
 import { MapPin } from 'lucide-react';
+import { useLanguage } from '@/contexts/LanguageContext';
+import LanguageSelector from './LanguageSelector';
 
 interface LocationData {
   latitude: number;
@@ -19,9 +21,9 @@ const SMSCapture = () => {
   const videoRef = useRef<HTMLVideoElement | null>(null);
   const streamRef = useRef<MediaStream | null>(null);
   const navigate = useNavigate();
+  const { t } = useLanguage();
 
   useEffect(() => {
-    // Auto-acquire location and start camera on mount
     autoAcquireLocation();
     startCamera();
 
@@ -46,7 +48,6 @@ const SMSCapture = () => {
         },
         (error) => {
           console.log("Location error, using default Chennai coordinates:", error);
-          // Use default Chennai coordinates for offline fallback
           setLocationData({
             latitude: 13.0827,
             longitude: 80.2707,
@@ -60,7 +61,6 @@ const SMSCapture = () => {
         }
       );
     } else {
-      // Fallback to Chennai coordinates
       setLocationData({
         latitude: 13.0827,
         longitude: 80.2707,
@@ -89,7 +89,6 @@ const SMSCapture = () => {
       }
     } catch (error) {
       console.error('Camera access error:', error);
-      // Continue without showing error to user as requested
     } finally {
       setLoading(false);
     }
@@ -108,7 +107,6 @@ const SMSCapture = () => {
       const imageDataUrl = canvas.toDataURL('image/jpeg', 0.8);
       setCapturedImage(imageDataUrl);
       
-      // Update location at capture time
       autoAcquireLocation();
       
       if (streamRef.current) {
@@ -134,18 +132,14 @@ const SMSCapture = () => {
       const googleMapsLink = `https://maps.google.com/?q=${locationData.latitude},${locationData.longitude}`;
       const emergencyNumber = "9092023126";
       
-      // For offline SMS, we'll use the device's default SMS app
       const smsMessage = `EMERGENCY ALERT from TEJUS App! Location: ${googleMapsLink} Time: ${new Date(locationData.timestamp).toLocaleString()} - Photo captured for emergency assistance. Please respond immediately!`;
       
-      // Try to open SMS app with pre-filled message
       const smsUrl = `sms:${emergencyNumber}?body=${encodeURIComponent(smsMessage)}`;
       
-      // Store image data locally for reference
       if (window.localStorage) {
         window.localStorage.setItem(`emergency_image_${Date.now()}`, capturedImage);
       }
       
-      // Open SMS app
       window.location.href = smsUrl;
       
       toast.success("SMS app opened! Please send the message manually.");
@@ -168,7 +162,8 @@ const SMSCapture = () => {
         <Button variant="ghost" size="icon" onClick={() => navigate('/')} className="text-white hover:bg-orange-700">
           <ArrowLeft />
         </Button>
-        <h1 className="text-xl font-bold ml-2 flex-1 text-center">TEJUS - SMS Emergency</h1>
+        <h1 className="text-xl font-bold ml-2 flex-1 text-center">{t('sms.title')}</h1>
+        <LanguageSelector />
       </div>
       
       <div className="flex-1 bg-black relative overflow-hidden">
@@ -178,7 +173,7 @@ const SMSCapture = () => {
               <div className="absolute inset-0 flex items-center justify-center bg-black/70 z-10">
                 <div className="text-white text-center">
                   <div className="animate-spin h-10 w-10 border-4 border-orange-500 border-t-transparent rounded-full mx-auto mb-2"></div>
-                  <p>Preparing camera...</p>
+                  <p>{t('sms.preparing')}</p>
                 </div>
               </div>
             )}
@@ -200,7 +195,7 @@ const SMSCapture = () => {
             </div>
             <div className="absolute top-4 left-4 right-4">
               <div className="bg-black/70 text-white text-sm p-2 rounded">
-                <p className="text-center">📱 Offline Mode - Auto SMS Ready</p>
+                <p className="text-center">📱 {t('sms.offline')}</p>
               </div>
             </div>
           </>
@@ -236,11 +231,11 @@ const SMSCapture = () => {
           <div className="flex items-center text-sm text-gray-300">
             <MapPin size={16} className="mr-1 text-orange-500" />
             <p className="truncate">
-              Location: {locationData.latitude.toFixed(4)}, {locationData.longitude.toFixed(4)}
+              {t('sms.location')} {locationData.latitude.toFixed(4)}, {locationData.longitude.toFixed(4)}
             </p>
           </div>
           <p className="text-xs text-gray-400 mt-1">
-            📱 SMS will be sent to: +91 9092023126 (Offline Mode)
+            📱 {t('sms.willSend')}
           </p>
         </div>
       )}
