@@ -107,16 +107,8 @@ const SMSCapture = () => {
         { device: 'webgpu' }
       );
 
-      // Convert data URL to image element for analysis
-      const img = new Image();
-      img.src = imageDataUrl;
-      
-      await new Promise((resolve) => {
-        img.onload = resolve;
-      });
-
-      // Classify the image
-      const results = await classifier(img);
+      // Use the image data URL directly instead of creating an image element
+      const results = await classifier(imageDataUrl);
       
       console.log('Image analysis results:', results);
 
