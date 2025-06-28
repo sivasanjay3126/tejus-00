@@ -7,6 +7,7 @@ import { useNavigate } from 'react-router-dom';
 import { MapPin } from 'lucide-react';
 import { useLanguage } from '@/contexts/LanguageContext';
 import LanguageSelector from './LanguageSelector';
+import { supabase } from '@/integrations/supabase/client';
 
 interface LocationData {
   latitude: number;
@@ -89,6 +90,7 @@ const SMSCapture = () => {
       }
     } catch (error) {
       console.error('Camera access error:', error);
+      toast.error("Camera access denied. Please allow camera permissions.");
     } finally {
       setLoading(false);
     }
@@ -120,6 +122,42 @@ const SMSCapture = () => {
     startCamera();
   };
 
+  const saveToSupabase = async (imageData: string, locationData: LocationData) => {
+    try {
+      const emergencyNumber = "9092023126";
+      const googleMapsLink = `https://maps.google.com/?q=${locationData.latitude},${locationData.longitude}`;
+      
+      const smsMessage = `EMERGENCY ALERT from TEJUS App! Location: ${googleMapsLink} Time: ${new Date(locationData.timestamp).toLocaleString()} - Photo captured for emergency assistance. Please respond immediately!`;
+      
+      const { data, error } = await supabase
+        .from('emergency_incidents')
+        .insert([
+          {
+            phone_number: emergencyNumber,
+            latitude: locationData.latitude,
+            longitude: locationData.longitude,
+            image_data: imageData,
+            incident_type: 'emergency',
+            message: smsMessage,
+            timestamp: locationData.timestamp,
+            status: 'reported'
+          }
+        ])
+        .select();
+
+      if (error) {
+        console.error('Supabase error:', error);
+        throw error;
+      }
+
+      console.log('Emergency incident saved to Supabase:', data);
+      return data[0];
+    } catch (error) {
+      console.error('Failed to save to Supabase:', error);
+      throw error;
+    }
+  };
+
   const sendSMS = async () => {
     if (!capturedImage || !locationData) {
       toast.error("Missing photo or location data");
@@ -129,28 +167,46 @@ const SMSCapture = () => {
     setLoading(true);
     
     try {
-      const googleMapsLink = `https://maps.google.com/?q=${locationData.latitude},${locationData.longitude}`;
-      const emergencyNumber = "9092023126";
+      // Save to Supabase first
+      const savedIncident = await saveToSupabase(capturedImage, locationData);
+      console.log('Emergency incident saved with ID:', savedIncident.id);
       
-      const smsMessage = `EMERGENCY ALERT from TEJUS App! Location: ${googleMapsLink} Time: ${new Date(locationData.timestamp).toLocaleString()} - Photo captured for emergency assistance. Please respond immediately!`;
+      const emergencyNumber = "9092023126";
+      const googleMapsLink = `https://maps.google.com/?q=${locationData.latitude},${locationData.longitude}`;
+      
+      const smsMessage = `🚨 EMERGENCY ALERT from TEJUS App!
+📍 Location: ${googleMapsLink}
+⏰ Time: ${new Date(locationData.timestamp).toLocaleString()}
+📸 Photo captured for emergency assistance
+📱 Incident ID: ${savedIncident.id.substring(0, 8)}
+Please respond immediately!`;
       
       const smsUrl = `sms:${emergencyNumber}?body=${encodeURIComponent(smsMessage)}`;
       
+      // Store image locally as backup
       if (window.localStorage) {
-        window.localStorage.setItem(`emergency_image_${Date.now()}`, capturedImage);
+        window.localStorage.setItem(`emergency_image_${savedIncident.id}`, capturedImage);
       }
       
+      // Open SMS app
       window.location.href = smsUrl;
       
-      toast.success("SMS app opened! Please send the message manually.");
+      toast.success("Emergency reported successfully! SMS app opened - please send the message.");
       
       setTimeout(() => {
         navigate('/');
       }, 3000);
       
     } catch (error) {
-      console.error("Error preparing SMS:", error);
-      toast.error("Failed to prepare SMS. Please call emergency services directly.");
+      console.error("Error saving emergency incident:", error);
+      toast.error("Failed to save emergency data. Please try again or call emergency services directly.");
+      
+      // Fallback SMS without Supabase
+      const emergencyNumber = "9092023126";
+      const googleMapsLink = `https://maps.google.com/?q=${locationData.latitude},${locationData.longitude}`;
+      const smsMessage = `🚨 EMERGENCY ALERT from TEJUS App! Location: ${googleMapsLink} Time: ${new Date(locationData.timestamp).toLocaleString()} - Photo captured. Please respond immediately!`;
+      const smsUrl = `sms:${emergencyNumber}?body=${encodeURIComponent(smsMessage)}`;
+      window.location.href = smsUrl;
     } finally {
       setLoading(false);
     }
@@ -219,7 +275,11 @@ const SMSCapture = () => {
                 className="h-14 w-14 rounded-full bg-orange-600 hover:bg-orange-700 text-white"
                 disabled={loading}
               >
-                <Send size={24} />
+                {loading ? (
+                  <div className="animate-spin h-5 w-5 border-2 border-white border-t-transparent rounded-full" />
+                ) : (
+                  <Send size={24} />
+                )}
               </Button>
             </div>
           </>
@@ -235,7 +295,10 @@ const SMSCapture = () => {
             </p>
           </div>
           <p className="text-xs text-gray-400 mt-1">
-            📱 {t('sms.willSend')}
+            📱 SMS will be sent to: 909-202-3126
+          </p>
+          <p className="text-xs text-gray-500 mt-1">
+            🗄️ Emergency data will be saved to database
           </p>
         </div>
       )}
