@@ -1,4 +1,3 @@
-
 import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
@@ -10,6 +9,7 @@ import NotFound from "./pages/NotFound";
 import CameraCapture from "./components/CameraCapture";
 import NearbyFacilities from "./components/NearbyFacilities";
 import SMSCapture from "./components/SMSCapture";
+import Dashboard from "./pages/Dashboard";
 
 const queryClient = new QueryClient();
 
@@ -22,6 +22,7 @@ const App = () => (
         <BrowserRouter>
           <Routes>
             <Route path="/" element={<Index />} />
+            <Route path="/dashboard" element={<Dashboard />} />
             <Route path="/camera" element={<CameraCapture />} />
             <Route path="/nearby" element={<NearbyFacilities />} />
             <Route path="/sms-capture" element={<SMSCapture />} />
@@ -32,5 +33,4 @@ const App = () => (
     </LanguageProvider>
   </QueryClientProvider>
 );
-
 export default App;
