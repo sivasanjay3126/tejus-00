@@ -1,12 +1,14 @@
 
 import React from 'react';
+import { Link } from 'react-router-dom';
 import EmergencyHeader from '@/components/EmergencyHeader';
 import SnapToSaveButton from '@/components/SnapToSaveButton';
 import GoToSaveButton from '@/components/GoToSaveButton';
 import SMSToSaveButton from '@/components/SMSToSaveButton';
 import FirstAidVideos from '@/components/FirstAidVideos';
-import { Phone, MapPin } from 'lucide-react';
+import { Phone, MapPin, LayoutDashboard } from 'lucide-react';
 import { useLanguage } from '@/contexts/LanguageContext';
+import { Button } from '@/components/ui/button';
 
 const Index = () => {
   const { t } = useLanguage();
@@ -24,6 +26,14 @@ const Index = () => {
       <EmergencyHeader />
       
       <main className="flex-1 container mx-auto p-4 max-w-md">
+        {/* Dashboard Link */}
+        <Link to="/dashboard" className="block mb-4">
+          <Button className="w-full bg-gradient-to-r from-red-600 to-orange-600 hover:from-red-700 hover:to-orange-700 text-white py-3">
+            <LayoutDashboard className="h-5 w-5 mr-2" />
+            View Accident Monitoring Dashboard
+          </Button>
+        </Link>
+
         <div className="bg-gray-800 rounded-lg shadow-lg p-6 mb-6 mt-2 border border-gray-700">
           <h1 className="text-2xl font-bold text-center text-white mb-3">
             {t('main.title')}
