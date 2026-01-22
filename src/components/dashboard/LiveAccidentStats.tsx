@@ -1,10 +1,9 @@
 import React, { useState, useEffect } from 'react';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
-import { Download, AlertTriangle, Bell, Clock, TrendingUp } from 'lucide-react';
+import { Download, AlertTriangle, Bell, Clock, TrendingUp, Activity } from 'lucide-react';
 import { getLiveStats, LiveStats, REGIONS_LIST } from '@/utils/dashboardData';
 import { generateLiveStatsReport } from '@/utils/pdfGenerator';
-import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from 'recharts';
+import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, Cell } from 'recharts';
 
 const LiveAccidentStats = () => {
   const [stats, setStats] = useState<LiveStats>(getLiveStats());
@@ -12,7 +11,7 @@ const LiveAccidentStats = () => {
   useEffect(() => {
     const interval = setInterval(() => {
       setStats(getLiveStats());
-    }, 30000); // Update every 30 seconds
+    }, 30000);
 
     return () => clearInterval(interval);
   }, []);
@@ -26,68 +25,114 @@ const LiveAccidentStats = () => {
     generateLiveStatsReport(stats);
   };
 
+  const statCards = [
+    { 
+      icon: TrendingUp, 
+      value: stats.totalAccidentsToday, 
+      label: "Today's Accidents",
+      color: 'from-red-500 to-red-600',
+      glow: 'glow-red'
+    },
+    { 
+      icon: Activity, 
+      value: stats.totalAccidentsMonth, 
+      label: 'This Month',
+      color: 'from-orange-500 to-orange-600',
+      glow: ''
+    },
+    { 
+      icon: Bell, 
+      value: stats.alertsSent, 
+      label: 'Alerts Sent',
+      color: 'from-blue-500 to-blue-600',
+      glow: 'glow-blue'
+    },
+    { 
+      icon: Clock, 
+      value: stats.avgResponseTime.toFixed(1), 
+      label: 'Avg Response (min)',
+      color: 'from-green-500 to-green-600',
+      glow: 'glow-green'
+    }
+  ];
+
+  const barColors = ['#ef4444', '#f97316', '#eab308', '#22c55e', '#3b82f6'];
+
   return (
-    <Card className="bg-gray-800 border-gray-700">
-      <CardHeader className="flex flex-row items-center justify-between">
-        <CardTitle className="text-white flex items-center gap-2">
-          <AlertTriangle className="h-5 w-5 text-red-500" />
-          Live Accident Stats
-        </CardTitle>
+    <div className="glass-card p-6 rounded-2xl">
+      <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-6">
+        <div className="flex items-center gap-3">
+          <div className="p-2.5 rounded-xl bg-gradient-to-br from-red-500 to-orange-500 glow-red">
+            <AlertTriangle className="h-5 w-5 text-white" />
+          </div>
+          <div>
+            <h3 className="text-lg font-bold text-foreground">Live Accident Stats</h3>
+            <p className="text-xs text-muted-foreground">Real-time monitoring across regions</p>
+          </div>
+        </div>
         <Button 
           variant="outline" 
           size="sm" 
           onClick={handleDownload}
-          className="bg-gray-700 border-gray-600 text-white hover:bg-gray-600"
+          className="glass-card border-white/20 text-foreground hover:bg-white/10 rounded-xl gap-2"
         >
-          <Download className="h-4 w-4 mr-2" />
+          <Download className="h-4 w-4" />
           Download Report
         </Button>
-      </CardHeader>
-      <CardContent>
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-6">
-          <div className="bg-gray-700 p-4 rounded-lg text-center">
-            <TrendingUp className="h-6 w-6 text-red-400 mx-auto mb-2" />
-            <p className="text-2xl font-bold text-white">{stats.totalAccidentsToday}</p>
-            <p className="text-xs text-gray-400">Today's Accidents</p>
-          </div>
-          <div className="bg-gray-700 p-4 rounded-lg text-center">
-            <TrendingUp className="h-6 w-6 text-orange-400 mx-auto mb-2" />
-            <p className="text-2xl font-bold text-white">{stats.totalAccidentsMonth}</p>
-            <p className="text-xs text-gray-400">This Month</p>
-          </div>
-          <div className="bg-gray-700 p-4 rounded-lg text-center">
-            <Bell className="h-6 w-6 text-blue-400 mx-auto mb-2" />
-            <p className="text-2xl font-bold text-white">{stats.alertsSent}</p>
-            <p className="text-xs text-gray-400">Alerts Sent</p>
-          </div>
-          <div className="bg-gray-700 p-4 rounded-lg text-center">
-            <Clock className="h-6 w-6 text-green-400 mx-auto mb-2" />
-            <p className="text-2xl font-bold text-white">{stats.avgResponseTime.toFixed(1)}</p>
-            <p className="text-xs text-gray-400">Avg Response (min)</p>
-          </div>
-        </div>
+      </div>
 
+      {/* Stat Cards */}
+      <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-6">
+        {statCards.map((stat, index) => (
+          <div 
+            key={index}
+            className={`stat-card rounded-xl ${stat.glow}`}
+          >
+            <div className={`w-10 h-10 mx-auto mb-3 rounded-xl bg-gradient-to-br ${stat.color} flex items-center justify-center`}>
+              <stat.icon className="h-5 w-5 text-white" />
+            </div>
+            <p className="text-2xl md:text-3xl font-bold text-foreground mb-1">{stat.value}</p>
+            <p className="text-xs text-muted-foreground">{stat.label}</p>
+          </div>
+        ))}
+      </div>
+
+      {/* Chart */}
+      <div className="glass-card p-4 rounded-xl">
+        <p className="text-sm font-medium text-muted-foreground mb-4">Accidents by Region</p>
         <div className="h-64">
-          <p className="text-sm text-gray-400 mb-2">Accidents by Region</p>
           <ResponsiveContainer width="100%" height="100%">
-            <BarChart data={chartData}>
-              <CartesianGrid strokeDasharray="3 3" stroke="#374151" />
-              <XAxis dataKey="name" tick={{ fill: '#9CA3AF', fontSize: 12 }} />
-              <YAxis tick={{ fill: '#9CA3AF' }} />
+            <BarChart data={chartData} barCategoryGap="20%">
+              <CartesianGrid strokeDasharray="3 3" stroke="rgba(255,255,255,0.1)" />
+              <XAxis 
+                dataKey="name" 
+                tick={{ fill: 'hsl(var(--muted-foreground))', fontSize: 12 }}
+                axisLine={{ stroke: 'rgba(255,255,255,0.1)' }}
+              />
+              <YAxis 
+                tick={{ fill: 'hsl(var(--muted-foreground))', fontSize: 12 }}
+                axisLine={{ stroke: 'rgba(255,255,255,0.1)' }}
+              />
               <Tooltip 
                 contentStyle={{ 
-                  backgroundColor: '#1F2937', 
-                  border: '1px solid #374151',
-                  borderRadius: '8px'
+                  backgroundColor: 'hsl(var(--card))', 
+                  border: '1px solid rgba(255,255,255,0.1)',
+                  borderRadius: '12px',
+                  boxShadow: '0 8px 32px rgba(0,0,0,0.3)'
                 }}
-                labelStyle={{ color: '#fff' }}
+                labelStyle={{ color: 'hsl(var(--foreground))', fontWeight: 'bold' }}
+                itemStyle={{ color: 'hsl(var(--muted-foreground))' }}
               />
-              <Bar dataKey="accidents" fill="#EF4444" radius={[4, 4, 0, 0]} />
+              <Bar dataKey="accidents" radius={[8, 8, 0, 0]}>
+                {chartData.map((_, index) => (
+                  <Cell key={`cell-${index}`} fill={barColors[index]} />
+                ))}
+              </Bar>
             </BarChart>
           </ResponsiveContainer>
         </div>
-      </CardContent>
-    </Card>
+      </div>
+    </div>
   );
 };
 

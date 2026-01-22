@@ -6,7 +6,7 @@ import SnapToSaveButton from '@/components/SnapToSaveButton';
 import GoToSaveButton from '@/components/GoToSaveButton';
 import SMSToSaveButton from '@/components/SMSToSaveButton';
 import FirstAidVideos from '@/components/FirstAidVideos';
-import { Phone, MapPin, LayoutDashboard } from 'lucide-react';
+import { Phone, MapPin, LayoutDashboard, ChevronRight, Activity } from 'lucide-react';
 import { useLanguage } from '@/contexts/LanguageContext';
 import { Button } from '@/components/ui/button';
 
@@ -14,33 +14,54 @@ const Index = () => {
   const { t } = useLanguage();
 
   const emergencyContacts = [
-    { name: t('contacts.ambulance'), number: "108" },
-    { name: t('contacts.police'), number: "100" },
-    { name: t('contacts.fire'), number: "101" },
-    { name: t('contacts.disaster'), number: "108" },
-    { name: t('contacts.women'), number: "1091" }
+    { name: t('contacts.ambulance'), number: "108", color: 'from-red-500 to-red-600' },
+    { name: t('contacts.police'), number: "100", color: 'from-blue-500 to-blue-600' },
+    { name: t('contacts.fire'), number: "101", color: 'from-orange-500 to-orange-600' },
+    { name: t('contacts.disaster'), number: "108", color: 'from-purple-500 to-purple-600' },
+    { name: t('contacts.women'), number: "1091", color: 'from-pink-500 to-pink-600' }
   ];
 
   return (
-    <div className="min-h-screen flex flex-col bg-gray-900 text-white">
+    <div className="min-h-screen flex flex-col bg-background text-foreground bg-mesh-gradient">
       <EmergencyHeader />
       
       <main className="flex-1 container mx-auto p-4 max-w-md">
         {/* Dashboard Link */}
-        <Link to="/dashboard" className="block mb-4">
-          <Button className="w-full bg-gradient-to-r from-red-600 to-orange-600 hover:from-red-700 hover:to-orange-700 text-white py-3">
-            <LayoutDashboard className="h-5 w-5 mr-2" />
-            View Accident Monitoring Dashboard
-          </Button>
+        <Link to="/dashboard" className="block mb-6 animate-fade-up">
+          <div className="glass-card-hover p-4 rounded-2xl group">
+            <div className="flex items-center justify-between">
+              <div className="flex items-center gap-3">
+                <div className="p-2.5 rounded-xl gradient-primary glow-red">
+                  <LayoutDashboard className="h-5 w-5 text-white" />
+                </div>
+                <div>
+                  <h3 className="font-semibold text-foreground group-hover:text-primary transition-colors">
+                    Monitoring Dashboard
+                  </h3>
+                  <p className="text-xs text-muted-foreground">View real-time accident statistics</p>
+                </div>
+              </div>
+              <div className="flex items-center gap-2">
+                <div className="flex items-center gap-1.5 px-2 py-1 rounded-full bg-green-500/20 border border-green-500/30">
+                  <div className="w-1.5 h-1.5 bg-green-500 rounded-full pulse-live" />
+                  <span className="text-[10px] text-green-400 font-medium">LIVE</span>
+                </div>
+                <ChevronRight className="h-5 w-5 text-muted-foreground group-hover:text-primary group-hover:translate-x-1 transition-all" />
+              </div>
+            </div>
+          </div>
         </Link>
 
-        <div className="bg-gray-800 rounded-lg shadow-lg p-6 mb-6 mt-2 border border-gray-700">
-          <h1 className="text-2xl font-bold text-center text-white mb-3">
-            {t('main.title')}
-          </h1>
-          <p className="text-center mb-6 text-gray-300">
-            {t('main.subtitle')}
-          </p>
+        {/* Main Actions Card */}
+        <div className="glass-card p-6 mb-6 rounded-2xl animate-fade-up-delay-1">
+          <div className="text-center mb-6">
+            <h1 className="text-2xl font-bold bg-gradient-to-r from-white to-gray-400 bg-clip-text text-transparent mb-2">
+              {t('main.title')}
+            </h1>
+            <p className="text-sm text-muted-foreground">
+              {t('main.subtitle')}
+            </p>
+          </div>
           
           <div className="space-y-4">
             <SnapToSaveButton />
@@ -49,41 +70,57 @@ const Index = () => {
           </div>
         </div>
         
-        <div className="bg-gray-800 rounded-lg shadow-md p-5 mb-6 border border-gray-700">
-          <h2 className="text-xl font-bold text-white mb-4 flex items-center gap-2">
-            <Phone className="text-primary_blue" />
-            {t('contacts.title')}
-          </h2>
+        {/* Emergency Contacts */}
+        <div className="glass-card p-6 mb-6 rounded-2xl animate-fade-up-delay-2">
+          <div className="flex items-center gap-3 mb-5">
+            <div className="p-2 rounded-xl bg-gradient-to-br from-blue-500 to-cyan-500 glow-blue">
+              <Phone className="h-4 w-4 text-white" />
+            </div>
+            <h2 className="text-lg font-bold text-foreground">
+              {t('contacts.title')}
+            </h2>
+          </div>
           <div className="grid grid-cols-2 gap-3">
             {emergencyContacts.map((contact, index) => (
               <a
                 key={index}
                 href={`tel:${contact.number}`}
-                className="bg-gray-700 p-3 rounded-md border border-gray-600 hover:border-primary_blue flex flex-col items-center justify-center transition-colors hover:bg-gray-600"
+                className="glass-card-hover p-4 rounded-xl flex flex-col items-center justify-center text-center group"
               >
-                <span className="font-semibold text-white text-sm">{contact.name}</span>
-                <span className="text-emergency text-lg font-bold">{contact.number}</span>
+                <div className={`w-12 h-12 rounded-full bg-gradient-to-br ${contact.color} flex items-center justify-center mb-2 group-hover:scale-110 transition-transform`}>
+                  <span className="text-white font-bold text-sm">{contact.number}</span>
+                </div>
+                <span className="text-xs font-medium text-foreground group-hover:text-primary transition-colors">
+                  {contact.name}
+                </span>
               </a>
             ))}
           </div>
         </div>
         
-        <div className="bg-gray-800 rounded-lg shadow-md p-5 mb-6 border border-gray-700">
-          <h2 className="text-xl font-bold text-white mb-4 flex items-center gap-2">
-            <MapPin className="text-primary_blue" />
-            {t('about.title')}
-          </h2>
-          <p className="text-sm text-gray-300">
+        {/* About Section */}
+        <div className="glass-card p-6 mb-6 rounded-2xl animate-fade-up-delay-3">
+          <div className="flex items-center gap-3 mb-4">
+            <div className="p-2 rounded-xl bg-gradient-to-br from-purple-500 to-pink-500">
+              <MapPin className="h-4 w-4 text-white" />
+            </div>
+            <h2 className="text-lg font-bold text-foreground">
+              {t('about.title')}
+            </h2>
+          </div>
+          <p className="text-sm text-muted-foreground leading-relaxed">
             {t('about.description')}
           </p>
         </div>
         
-        <FirstAidVideos />
+        <div className="animate-fade-up-delay-4">
+          <FirstAidVideos />
+        </div>
       </main>
       
-      <footer className="bg-gray-800 border-t border-gray-700 text-white p-4 text-center text-sm">
-        <p>{t('footer.title')}</p>
-        <p className="text-xs mt-1 text-gray-400">{t('footer.copyright')}</p>
+      <footer className="glass-card border-t border-white/10 text-foreground p-6 text-center mt-6">
+        <p className="text-sm font-medium">{t('footer.title')}</p>
+        <p className="text-xs mt-1 text-muted-foreground">{t('footer.copyright')}</p>
       </footer>
     </div>
   );

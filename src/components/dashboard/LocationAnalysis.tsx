@@ -1,11 +1,9 @@
 import React, { useState } from 'react';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
-import { Download, MapPin, AlertCircle } from 'lucide-react';
+import { Download, MapPin, AlertCircle, Navigation } from 'lucide-react';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { DANGEROUS_ROADS, HOTSPOT_COORDINATES, REGIONS_LIST, Region } from '@/utils/dashboardData';
 import { generateLocationReport } from '@/utils/pdfGenerator';
-import { Badge } from '@/components/ui/badge';
 
 const LocationAnalysis = () => {
   const [selectedRegion, setSelectedRegion] = useState<Region>('Salem');
@@ -14,12 +12,12 @@ const LocationAnalysis = () => {
     generateLocationReport();
   };
 
-  const getSeverityColor = (severity: string) => {
+  const getSeverityStyles = (severity: string) => {
     switch (severity) {
-      case 'Critical': return 'bg-red-600';
-      case 'High': return 'bg-orange-500';
-      case 'Medium': return 'bg-yellow-500';
-      default: return 'bg-green-500';
+      case 'Critical': return 'badge-critical';
+      case 'High': return 'badge-high';
+      case 'Medium': return 'badge-medium';
+      default: return 'badge-low';
     }
   };
 
@@ -27,84 +25,105 @@ const LocationAnalysis = () => {
   const hotspots = HOTSPOT_COORDINATES[selectedRegion];
 
   return (
-    <Card className="bg-gray-800 border-gray-700">
-      <CardHeader className="flex flex-row items-center justify-between">
-        <CardTitle className="text-white flex items-center gap-2">
-          <MapPin className="h-5 w-5 text-blue-500" />
-          Location Analysis
-        </CardTitle>
+    <div className="glass-card p-6 rounded-2xl h-full">
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-6">
+        <div className="flex items-center gap-3">
+          <div className="p-2.5 rounded-xl bg-gradient-to-br from-blue-500 to-cyan-500 glow-blue">
+            <MapPin className="h-5 w-5 text-white" />
+          </div>
+          <div>
+            <h3 className="text-lg font-bold text-foreground">Location Analysis</h3>
+            <p className="text-xs text-muted-foreground">Hotspots & dangerous roads</p>
+          </div>
+        </div>
         <Button 
           variant="outline" 
           size="sm" 
           onClick={handleDownload}
-          className="bg-gray-700 border-gray-600 text-white hover:bg-gray-600"
+          className="glass-card border-white/20 text-foreground hover:bg-white/10 rounded-xl gap-2"
         >
-          <Download className="h-4 w-4 mr-2" />
+          <Download className="h-4 w-4" />
           Download Report
         </Button>
-      </CardHeader>
-      <CardContent>
-        <div className="mb-4">
-          <Select value={selectedRegion} onValueChange={(value) => setSelectedRegion(value as Region)}>
-            <SelectTrigger className="w-full bg-gray-700 border-gray-600 text-white">
-              <SelectValue placeholder="Select Region" />
-            </SelectTrigger>
-            <SelectContent className="bg-gray-700 border-gray-600">
-              {REGIONS_LIST.map(region => (
-                <SelectItem 
-                  key={region} 
-                  value={region}
-                  className="text-white hover:bg-gray-600"
-                >
-                  {region}
-                </SelectItem>
-              ))}
-            </SelectContent>
-          </Select>
-        </div>
+      </div>
 
-        {/* Hotspots visualization */}
-        <div className="bg-gray-700 rounded-lg p-4 mb-4">
-          <h4 className="text-sm font-medium text-gray-300 mb-3">Accident Hotspots - {selectedRegion}</h4>
-          <div className="grid grid-cols-3 gap-2">
-            {hotspots.map((spot, index) => (
+      {/* Region Selector */}
+      <div className="mb-6">
+        <Select value={selectedRegion} onValueChange={(value) => setSelectedRegion(value as Region)}>
+          <SelectTrigger className="w-full glass-card border-white/20 text-foreground rounded-xl">
+            <SelectValue placeholder="Select Region" />
+          </SelectTrigger>
+          <SelectContent className="glass-card border-white/20 backdrop-blur-xl">
+            {REGIONS_LIST.map(region => (
+              <SelectItem 
+                key={region} 
+                value={region}
+                className="text-foreground hover:bg-white/10 rounded-lg focus:bg-white/10"
+              >
+                {region}
+              </SelectItem>
+            ))}
+          </SelectContent>
+        </Select>
+      </div>
+
+      {/* Hotspots Grid */}
+      <div className="glass-card rounded-xl p-4 mb-6">
+        <div className="flex items-center gap-2 mb-4">
+          <AlertCircle className="h-4 w-4 text-red-400" />
+          <h4 className="text-sm font-semibold text-foreground">Accident Hotspots - {selectedRegion}</h4>
+        </div>
+        <div className="grid grid-cols-3 gap-3">
+          {hotspots.map((spot, index) => (
+            <div 
+              key={index}
+              className="glass-card-hover rounded-xl p-4 text-center relative overflow-hidden"
+            >
               <div 
-                key={index}
-                className="relative bg-gray-600 rounded-lg p-3 text-center"
+                className="absolute inset-0 opacity-20 rounded-xl"
                 style={{ 
-                  boxShadow: `0 0 ${spot.intensity * 20}px ${spot.intensity * 10}px rgba(239, 68, 68, ${spot.intensity * 0.5})` 
+                  background: `radial-gradient(circle at center, rgba(239, 68, 68, ${spot.intensity}) 0%, transparent 70%)`
                 }}
-              >
-                <AlertCircle className="h-6 w-6 text-red-500 mx-auto mb-1" />
-                <p className="text-xs text-gray-300">Hotspot {index + 1}</p>
-                <p className="text-xs text-red-400">{(spot.intensity * 100).toFixed(0)}% intensity</p>
-              </div>
-            ))}
-          </div>
-        </div>
-
-        {/* Dangerous roads */}
-        <div>
-          <h4 className="text-sm font-medium text-gray-300 mb-3">Most Dangerous Roads</h4>
-          <div className="space-y-2">
-            {roads.map((road, index) => (
-              <div 
-                key={index}
-                className="flex items-center justify-between bg-gray-700 p-3 rounded-lg"
-              >
-                <div className="flex-1">
-                  <p className="text-sm text-white font-medium">{road.name}</p>
-                  <p className="text-xs text-gray-400">{road.accidents} accidents this month</p>
+              />
+              <div className="relative z-10">
+                <div className="w-10 h-10 mx-auto mb-2 rounded-full bg-red-500/20 flex items-center justify-center">
+                  <Navigation className="h-5 w-5 text-red-400" />
                 </div>
-                <Badge className={`${getSeverityColor(road.severity)} text-white`}>
-                  {road.severity}
-                </Badge>
+                <p className="text-xs font-medium text-foreground">Zone {index + 1}</p>
+                <p className="text-lg font-bold text-red-400">{(spot.intensity * 100).toFixed(0)}%</p>
+                <p className="text-[10px] text-muted-foreground">intensity</p>
               </div>
-            ))}
-          </div>
+            </div>
+          ))}
         </div>
-      </CardContent>
-    </Card>
+      </div>
+
+      {/* Dangerous Roads */}
+      <div>
+        <div className="flex items-center gap-2 mb-4">
+          <MapPin className="h-4 w-4 text-orange-400" />
+          <h4 className="text-sm font-semibold text-foreground">Dangerous Roads</h4>
+        </div>
+        <div className="space-y-3">
+          {roads.map((road, index) => (
+            <div 
+              key={index}
+              className="glass-card-hover p-4 rounded-xl flex items-center justify-between group"
+            >
+              <div className="flex-1 min-w-0">
+                <p className="text-sm font-medium text-foreground truncate group-hover:text-primary transition-colors">
+                  {road.name}
+                </p>
+                <p className="text-xs text-muted-foreground">{road.accidents} accidents this month</p>
+              </div>
+              <span className={`px-3 py-1 rounded-full text-xs font-medium ${getSeverityStyles(road.severity)}`}>
+                {road.severity}
+              </span>
+            </div>
+          ))}
+        </div>
+      </div>
+    </div>
   );
 };
 
