@@ -1,6 +1,7 @@
+
 import React, { useState } from 'react';
 import { Button } from '@/components/ui/button';
-import { Download, MapPin, AlertCircle, Navigation } from 'lucide-react';
+import { Download, MapPin, AlertCircle, Navigation, Target } from 'lucide-react';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { DANGEROUS_ROADS, HOTSPOT_COORDINATES, REGIONS_LIST, Region } from '@/utils/dashboardData';
 import { generateLocationReport } from '@/utils/pdfGenerator';
@@ -25,10 +26,10 @@ const LocationAnalysis = () => {
   const hotspots = HOTSPOT_COORDINATES[selectedRegion];
 
   return (
-    <div className="glass-card p-6 rounded-2xl h-full">
+    <div className="neon-card p-6 h-full">
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-6">
-        <div className="flex items-center gap-3">
-          <div className="p-2.5 rounded-xl bg-gradient-to-br from-blue-500 to-cyan-500 glow-blue">
+        <div className="flex items-center gap-4">
+          <div className="icon-container-cyber">
             <MapPin className="h-5 w-5 text-white" />
           </div>
           <div>
@@ -40,7 +41,7 @@ const LocationAnalysis = () => {
           variant="outline" 
           size="sm" 
           onClick={handleDownload}
-          className="glass-card border-white/20 text-foreground hover:bg-white/10 rounded-xl gap-2"
+          className="neon-card border-neon-cyan/30 text-foreground hover:bg-neon-cyan/10 hover:border-neon-cyan/50 rounded-xl gap-2"
         >
           <Download className="h-4 w-4" />
           Download Report
@@ -50,15 +51,15 @@ const LocationAnalysis = () => {
       {/* Region Selector */}
       <div className="mb-6">
         <Select value={selectedRegion} onValueChange={(value) => setSelectedRegion(value as Region)}>
-          <SelectTrigger className="w-full glass-card border-white/20 text-foreground rounded-xl">
+          <SelectTrigger className="w-full cyber-card border-neon-cyan/20 text-foreground rounded-xl focus:ring-neon-cyan/50">
             <SelectValue placeholder="Select Region" />
           </SelectTrigger>
-          <SelectContent className="glass-card border-white/20 backdrop-blur-xl">
+          <SelectContent className="neon-card border-neon-cyan/20 backdrop-blur-xl">
             {REGIONS_LIST.map(region => (
               <SelectItem 
                 key={region} 
                 value={region}
-                className="text-foreground hover:bg-white/10 rounded-lg focus:bg-white/10"
+                className="text-foreground hover:bg-neon-cyan/10 rounded-lg focus:bg-neon-cyan/10"
               >
                 {region}
               </SelectItem>
@@ -68,29 +69,29 @@ const LocationAnalysis = () => {
       </div>
 
       {/* Hotspots Grid */}
-      <div className="glass-card rounded-xl p-4 mb-6">
+      <div className="cyber-card rounded-xl p-4 mb-6">
         <div className="flex items-center gap-2 mb-4">
-          <AlertCircle className="h-4 w-4 text-red-400" />
+          <Target className="h-4 w-4 text-neon-pink" />
           <h4 className="text-sm font-semibold text-foreground">Accident Hotspots - {selectedRegion}</h4>
         </div>
         <div className="grid grid-cols-3 gap-3">
           {hotspots.map((spot, index) => (
             <div 
               key={index}
-              className="glass-card-hover rounded-xl p-4 text-center relative overflow-hidden"
+              className="group neon-card-hover rounded-xl p-4 text-center relative overflow-hidden"
             >
               <div 
-                className="absolute inset-0 opacity-20 rounded-xl"
+                className="absolute inset-0 opacity-30 rounded-xl"
                 style={{ 
-                  background: `radial-gradient(circle at center, rgba(239, 68, 68, ${spot.intensity}) 0%, transparent 70%)`
+                  background: `radial-gradient(circle at center, hsl(340 82% 52% / ${spot.intensity}) 0%, transparent 70%)`
                 }}
               />
               <div className="relative z-10">
-                <div className="w-10 h-10 mx-auto mb-2 rounded-full bg-red-500/20 flex items-center justify-center">
-                  <Navigation className="h-5 w-5 text-red-400" />
+                <div className="w-12 h-12 mx-auto mb-2 rounded-xl bg-gradient-to-br from-neon-pink to-neon-purple flex items-center justify-center group-hover:scale-110 transition-transform">
+                  <Navigation className="h-5 w-5 text-white" />
                 </div>
                 <p className="text-xs font-medium text-foreground">Zone {index + 1}</p>
-                <p className="text-lg font-bold text-red-400">{(spot.intensity * 100).toFixed(0)}%</p>
+                <p className="text-xl font-black text-neon-pink">{(spot.intensity * 100).toFixed(0)}%</p>
                 <p className="text-[10px] text-muted-foreground">intensity</p>
               </div>
             </div>
@@ -101,22 +102,22 @@ const LocationAnalysis = () => {
       {/* Dangerous Roads */}
       <div>
         <div className="flex items-center gap-2 mb-4">
-          <MapPin className="h-4 w-4 text-orange-400" />
+          <AlertCircle className="h-4 w-4 text-neon-orange" />
           <h4 className="text-sm font-semibold text-foreground">Dangerous Roads</h4>
         </div>
         <div className="space-y-3">
           {roads.map((road, index) => (
             <div 
               key={index}
-              className="glass-card-hover p-4 rounded-xl flex items-center justify-between group"
+              className="group cyber-card p-4 rounded-xl flex items-center justify-between transition-all hover:border-neon-cyan/40"
             >
               <div className="flex-1 min-w-0">
-                <p className="text-sm font-medium text-foreground truncate group-hover:text-primary transition-colors">
+                <p className="text-sm font-medium text-foreground truncate group-hover:text-neon-cyan transition-colors">
                   {road.name}
                 </p>
                 <p className="text-xs text-muted-foreground">{road.accidents} accidents this month</p>
               </div>
-              <span className={`px-3 py-1 rounded-full text-xs font-medium ${getSeverityStyles(road.severity)}`}>
+              <span className={getSeverityStyles(road.severity)}>
                 {road.severity}
               </span>
             </div>
