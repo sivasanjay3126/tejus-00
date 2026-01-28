@@ -1,58 +1,71 @@
-
 import React from 'react';
 import { Link } from 'react-router-dom';
+import { motion } from 'framer-motion';
 import EmergencyHeader from '@/components/EmergencyHeader';
 import SnapToSaveButton from '@/components/SnapToSaveButton';
 import GoToSaveButton from '@/components/GoToSaveButton';
 import SMSToSaveButton from '@/components/SMSToSaveButton';
 import FirstAidVideos from '@/components/FirstAidVideos';
-import { Phone, Compass, BarChart3, ChevronRight, Shield, Zap, Radio } from 'lucide-react';
+import { Phone, Compass, BarChart3, ChevronRight, Shield, Flame, Radio, Heart } from 'lucide-react';
 import { useLanguage } from '@/contexts/LanguageContext';
+import { useFeedback } from '@/contexts/FeedbackContext';
 
 const Index = () => {
   const { t } = useLanguage();
+  const { triggerFeedback } = useFeedback();
 
   const emergencyContacts = [
-    { name: t('contacts.ambulance'), number: "108", icon: Phone, gradient: 'from-red-500 to-rose-600' },
-    { name: t('contacts.police'), number: "100", icon: Shield, gradient: 'from-blue-500 to-indigo-600' },
-    { name: t('contacts.fire'), number: "101", icon: Zap, gradient: 'from-orange-500 to-amber-600' },
-    { name: t('contacts.disaster'), number: "108", icon: Radio, gradient: 'from-purple-500 to-violet-600' },
-    { name: t('contacts.women'), number: "1091", icon: Shield, gradient: 'from-pink-500 to-rose-600' }
+    { name: t('contacts.ambulance'), number: "108", icon: Heart, color: 'bg-emergency' },
+    { name: t('contacts.police'), number: "100", icon: Shield, color: 'bg-primary' },
+    { name: t('contacts.fire'), number: "101", icon: Flame, color: 'bg-warning' },
+    { name: t('contacts.disaster'), number: "108", icon: Radio, color: 'bg-chart-5' },
+    { name: t('contacts.women'), number: "1091", icon: Shield, color: 'bg-info' }
   ];
 
+  const handleContactClick = () => {
+    triggerFeedback('click');
+  };
+
   return (
-    <div className="min-h-screen flex flex-col bg-background text-foreground bg-mesh-cyber bg-orbs">
+    <div className="min-h-screen flex flex-col bg-background text-foreground bg-gradient-subtle">
       <EmergencyHeader />
       
       <main className="flex-1 container mx-auto p-4 max-w-md">
         {/* Dashboard Link */}
-        <Link to="/dashboard" className="block mb-6 animate-fade-up">
-          <div className="group neon-card-hover p-5">
+        <Link to="/dashboard" className="block mb-6">
+          <motion.div 
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            whileHover={{ y: -2 }}
+            className="card-interactive p-5"
+          >
             <div className="flex items-center justify-between">
               <div className="flex items-center gap-4">
-                <div className="icon-container-neon">
-                  <BarChart3 className="h-5 w-5 text-white" />
+                <div className="icon-container">
+                  <BarChart3 className="h-5 w-5" />
                 </div>
                 <div>
-                  <h3 className="font-bold text-foreground group-hover:text-neon-pink transition-colors">
+                  <h3 className="font-bold text-foreground">
                     Monitoring Dashboard
                   </h3>
                   <p className="text-xs text-muted-foreground">Real-time accident statistics</p>
                 </div>
               </div>
               <div className="flex items-center gap-3">
-                <div className="flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-neon-green/20 border border-neon-green/30">
-                  <div className="w-2 h-2 bg-neon-green rounded-full pulse-cyber" />
-                  <span className="text-[10px] text-neon-green font-bold uppercase tracking-wider">Live</span>
-                </div>
-                <ChevronRight className="h-5 w-5 text-muted-foreground group-hover:text-neon-pink group-hover:translate-x-1 transition-all" />
+                <span className="badge-live">Live</span>
+                <ChevronRight className="h-5 w-5 text-muted-foreground" />
               </div>
             </div>
-          </div>
+          </motion.div>
         </Link>
 
         {/* Main Actions Card */}
-        <div className="neon-card p-6 mb-6 animate-fade-up-delay-1">
+        <motion.div 
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.1 }}
+          className="card-elevated p-6 mb-6"
+        >
           <div className="text-center mb-6">
             <h1 className="text-2xl font-black text-foreground mb-2">
               {t('main.title')}
@@ -67,62 +80,79 @@ const Index = () => {
             <GoToSaveButton />
             <SMSToSaveButton />
           </div>
-        </div>
+        </motion.div>
         
         {/* Emergency Contacts */}
-        <div className="neon-card p-6 mb-6 animate-fade-up-delay-2">
-          <div className="flex items-center gap-4 mb-5">
-            <div className="icon-container-cyber">
-              <Phone className="h-5 w-5 text-white" />
+        <motion.div 
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.2 }}
+          className="card-elevated p-6 mb-6"
+        >
+          <div className="section-header">
+            <div className="icon-container-info">
+              <Phone className="h-5 w-5" />
             </div>
             <div>
-              <h2 className="text-lg font-bold text-foreground">
+              <h2 className="section-title">
                 {t('contacts.title')}
               </h2>
-              <p className="text-xs text-muted-foreground">Tap to call instantly</p>
+              <p className="section-subtitle">Tap to call instantly</p>
             </div>
           </div>
           <div className="grid grid-cols-2 gap-3">
             {emergencyContacts.map((contact, index) => (
-              <a
+              <motion.a
                 key={index}
                 href={`tel:${contact.number}`}
-                className="group cyber-card p-4 flex flex-col items-center justify-center text-center transition-all duration-300 hover:scale-105"
+                onClick={handleContactClick}
+                whileHover={{ scale: 1.02 }}
+                whileTap={{ scale: 0.98 }}
+                className="group card-elevated p-4 flex flex-col items-center justify-center text-center hover:border-primary/30"
               >
-                <div className={`w-14 h-14 rounded-2xl bg-gradient-to-br ${contact.gradient} flex items-center justify-center mb-3 group-hover:scale-110 transition-transform shadow-lg`}>
-                  <contact.icon className="h-6 w-6 text-white" />
+                <div className={`w-14 h-14 rounded-2xl ${contact.color} flex items-center justify-center mb-3 text-white shadow-lg group-hover:scale-105 transition-transform`}>
+                  <contact.icon className="h-6 w-6" />
                 </div>
                 <span className="text-2xl font-black text-foreground mb-1">{contact.number}</span>
-                <span className="text-xs text-muted-foreground group-hover:text-neon-cyan transition-colors">
+                <span className="text-xs text-muted-foreground">
                   {contact.name}
                 </span>
-              </a>
+              </motion.a>
             ))}
           </div>
-        </div>
+        </motion.div>
         
         {/* About Section */}
-        <div className="neon-card p-6 mb-6 animate-fade-up-delay-3">
-          <div className="flex items-center gap-4 mb-4">
-            <div className="icon-container-purple">
-              <Compass className="h-5 w-5 text-white" />
+        <motion.div 
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.3 }}
+          className="card-elevated p-6 mb-6"
+        >
+          <div className="section-header">
+            <div className="icon-container" style={{ background: 'hsl(262 83% 58%)' }}>
+              <Compass className="h-5 w-5" />
             </div>
-            <h2 className="text-lg font-bold text-foreground">
+            <h2 className="section-title">
               {t('about.title')}
             </h2>
           </div>
           <p className="text-sm text-muted-foreground leading-relaxed">
             {t('about.description')}
           </p>
-        </div>
+        </motion.div>
         
-        <div className="animate-fade-up-delay-4">
+        <motion.div 
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.4 }}
+        >
           <FirstAidVideos />
-        </div>
+        </motion.div>
       </main>
       
-      <footer className="neon-card border-t border-neon-pink/20 text-foreground p-6 text-center mt-6">
-        <p className="text-sm font-bold bg-gradient-to-r from-neon-pink via-neon-purple to-neon-cyan bg-clip-text text-transparent">
+      <footer className="card-elevated border-t border-border text-foreground p-6 text-center mt-6">
+        <p className="text-sm font-bold text-primary">
           {t('footer.title')}
         </p>
         <p className="text-xs mt-1 text-muted-foreground">{t('footer.copyright')}</p>

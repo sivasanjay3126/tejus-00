@@ -1,44 +1,41 @@
-
 import React from 'react';
-import { Aperture, Sparkles } from 'lucide-react';
+import { Camera, ArrowRight } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
+import { motion } from 'framer-motion';
+import { useFeedback } from '@/contexts/FeedbackContext';
 
 const SnapToSaveButton = () => {
   const navigate = useNavigate();
+  const { triggerFeedback } = useFeedback();
 
   const handleClick = () => {
+    triggerFeedback('click');
     navigate('/camera');
   };
 
   return (
-    <button 
+    <motion.button 
+      whileHover={{ y: -2, boxShadow: '0 8px 24px hsl(var(--emergency) / 0.25)' }}
+      whileTap={{ scale: 0.98 }}
       onClick={handleClick} 
-      className="group relative w-full overflow-hidden rounded-2xl p-[2px] transition-all duration-300 hover:scale-[1.02]"
+      className="group w-full card-interactive p-5 flex items-center gap-4 bg-gradient-to-r from-emergency/10 to-emergency/5 border-emergency/20 hover:border-emergency/40"
       aria-label="Snap to Save - Take a photo for emergency"
     >
-      {/* Animated gradient border */}
-      <div className="absolute inset-0 rounded-2xl bg-gradient-neon opacity-75 group-hover:opacity-100 transition-opacity" />
-      
-      {/* Inner content */}
-      <div className="relative flex items-center justify-center gap-4 rounded-2xl bg-background/90 backdrop-blur-sm px-6 py-5 transition-all group-hover:bg-background/80">
-        <div className="relative">
-          <div className="absolute inset-0 rounded-xl bg-neon-pink/30 blur-lg group-hover:blur-xl transition-all" />
-          <div className="relative p-3 rounded-xl bg-gradient-to-br from-neon-pink to-neon-purple">
-            <Aperture className="h-7 w-7 text-white" />
-          </div>
-        </div>
-        <div className="flex-1 text-left">
-          <span className="text-xl font-bold text-foreground flex items-center gap-2">
-            Snap to Save
-            <Sparkles className="h-4 w-4 text-neon-pink animate-pulse" />
-          </span>
-          <p className="text-sm text-muted-foreground">Capture & report instantly</p>
-        </div>
-        <div className="h-10 w-10 rounded-full bg-neon-pink/20 flex items-center justify-center group-hover:bg-neon-pink/30 transition-colors">
-          <span className="text-neon-pink text-lg">→</span>
-        </div>
+      <div className="icon-container-emergency">
+        <Camera className="h-6 w-6" />
       </div>
-    </button>
+      
+      <div className="flex-1 text-left">
+        <span className="text-lg font-bold text-foreground block">
+          Snap to Save
+        </span>
+        <p className="text-sm text-muted-foreground">Capture & report accidents instantly</p>
+      </div>
+      
+      <div className="w-10 h-10 rounded-full bg-emergency/10 flex items-center justify-center group-hover:bg-emergency/20 transition-colors">
+        <ArrowRight className="h-5 w-5 text-emergency group-hover:translate-x-0.5 transition-transform" />
+      </div>
+    </motion.button>
   );
 };
 
