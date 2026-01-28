@@ -4,6 +4,9 @@ import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { LanguageProvider } from "@/contexts/LanguageContext";
+import { FeedbackProvider } from "@/contexts/FeedbackContext";
+import { OfflineBanner } from "@/components/ui/OfflineBanner";
+import { LowBatteryBanner } from "@/components/ui/LowBatteryBanner";
 import Index from "./pages/Index";
 import NotFound from "./pages/NotFound";
 import CameraCapture from "./components/CameraCapture";
@@ -16,20 +19,24 @@ const queryClient = new QueryClient();
 const App = () => (
   <QueryClientProvider client={queryClient}>
     <LanguageProvider>
-      <TooltipProvider>
-        <Toaster />
-        <Sonner />
-        <BrowserRouter>
-          <Routes>
-            <Route path="/" element={<Index />} />
-            <Route path="/dashboard" element={<Dashboard />} />
-            <Route path="/camera" element={<CameraCapture />} />
-            <Route path="/nearby" element={<NearbyFacilities />} />
-            <Route path="/sms-capture" element={<SMSCapture />} />
-            <Route path="*" element={<NotFound />} />
-          </Routes>
-        </BrowserRouter>
-      </TooltipProvider>
+      <FeedbackProvider>
+        <TooltipProvider>
+          <Toaster />
+          <Sonner />
+          <OfflineBanner />
+          <LowBatteryBanner />
+          <BrowserRouter>
+            <Routes>
+              <Route path="/" element={<Index />} />
+              <Route path="/dashboard" element={<Dashboard />} />
+              <Route path="/camera" element={<CameraCapture />} />
+              <Route path="/nearby" element={<NearbyFacilities />} />
+              <Route path="/sms-capture" element={<SMSCapture />} />
+              <Route path="*" element={<NotFound />} />
+            </Routes>
+          </BrowserRouter>
+        </TooltipProvider>
+      </FeedbackProvider>
     </LanguageProvider>
   </QueryClientProvider>
 );

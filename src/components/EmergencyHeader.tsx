@@ -1,45 +1,78 @@
-
 import React from 'react';
-import { Heart, Zap } from 'lucide-react';
+import { Heart, Shield, Settings, Accessibility } from 'lucide-react';
+import { motion } from 'framer-motion';
 import { useLanguage } from '@/contexts/LanguageContext';
+import { useFeedback } from '@/contexts/FeedbackContext';
+import { ThemeToggle } from '@/components/ui/ThemeToggle';
+import { AudioToggle } from '@/components/ui/AudioToggle';
 import LanguageSelector from './LanguageSelector';
 
 const EmergencyHeader = () => {
   const { t } = useLanguage();
+  const { toggleHighContrast, isHighContrast, triggerFeedback } = useFeedback();
+
+  const handleAccessibilityClick = () => {
+    triggerFeedback('click');
+    toggleHighContrast();
+  };
 
   return (
-    <header className="relative overflow-hidden">
-      {/* Gradient background */}
-      <div className="absolute inset-0 bg-gradient-to-r from-neon-pink via-neon-purple to-neon-cyan opacity-90" />
-      
-      {/* Animated glow overlay */}
-      <div className="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-background/50" />
+    <header className="relative overflow-hidden bg-card border-b border-border">
+      {/* Subtle gradient overlay */}
+      <div className="absolute inset-0 bg-gradient-to-r from-primary/5 via-transparent to-primary/5" />
       
       {/* Content */}
-      <div className="relative container mx-auto px-4 py-6">
+      <div className="relative container mx-auto px-4 py-5">
         <div className="flex items-center justify-between">
-          <div className="flex items-center justify-center flex-1">
+          {/* Logo and Title */}
+          <motion.div 
+            initial={{ opacity: 0, x: -20 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{ duration: 0.4 }}
+            className="flex items-center gap-4"
+          >
             <div className="relative">
-              {/* Pulsing ring */}
-              <div className="absolute inset-0 rounded-full bg-white/30 animate-ping" style={{ animationDuration: '2s' }} />
-              <div className="relative p-3 rounded-full bg-white/20 backdrop-blur-sm">
-                <Heart className="h-8 w-8 text-white animate-bounce-soft" fill="currentColor" />
-              </div>
+              <motion.div
+                animate={{ scale: [1, 1.1, 1] }}
+                transition={{ repeat: Infinity, duration: 2, ease: 'easeInOut' }}
+                className="icon-container-emergency"
+              >
+                <Heart className="h-7 w-7" fill="currentColor" />
+              </motion.div>
             </div>
-            <div className="ml-4">
-              <h1 className="text-3xl md:text-4xl font-black tracking-tight text-white flex items-center gap-2">
+            <div>
+              <h1 className="text-2xl md:text-3xl font-black tracking-tight text-foreground flex items-center gap-2">
                 {t('app.title')}
-                <Zap className="h-6 w-6 text-yellow-300 animate-glow-pulse" fill="currentColor" />
               </h1>
-              <p className="text-white/80 text-sm md:text-base font-medium mt-0.5">{t('app.subtitle')}</p>
+              <p className="text-muted-foreground text-sm font-medium mt-0.5">{t('app.subtitle')}</p>
             </div>
-          </div>
-          <LanguageSelector />
+          </motion.div>
+
+          {/* Controls */}
+          <motion.div 
+            initial={{ opacity: 0, x: 20 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{ duration: 0.4, delay: 0.1 }}
+            className="flex items-center gap-2"
+          >
+            <ThemeToggle />
+            <AudioToggle />
+            <motion.button
+              whileTap={{ scale: 0.9 }}
+              onClick={handleAccessibilityClick}
+              className={`p-3 rounded-2xl border transition-all duration-200 ${
+                isHighContrast 
+                  ? 'bg-primary text-primary-foreground border-primary' 
+                  : 'bg-card border-border hover:bg-accent hover:border-primary/30'
+              }`}
+              aria-label="Toggle high contrast mode"
+            >
+              <Accessibility className="h-5 w-5" />
+            </motion.button>
+            <LanguageSelector />
+          </motion.div>
         </div>
       </div>
-
-      {/* Bottom edge glow */}
-      <div className="absolute bottom-0 left-0 right-0 h-1 bg-gradient-to-r from-transparent via-white/50 to-transparent" />
     </header>
   );
 };

@@ -1,13 +1,15 @@
-
 import React, { useState, useEffect } from 'react';
 import { Button } from '@/components/ui/button';
-import { Download, AlertTriangle, Bell, Clock, TrendingUp, Activity, Sparkles } from 'lucide-react';
+import { Download, AlertTriangle, Bell, Clock, TrendingUp, Activity } from 'lucide-react';
+import { motion } from 'framer-motion';
 import { getLiveStats, LiveStats, REGIONS_LIST } from '@/utils/dashboardData';
 import { generateLiveStatsReport } from '@/utils/pdfGenerator';
 import { BarChart, Bar, XAxis, YAxis, Tooltip, ResponsiveContainer, Cell } from 'recharts';
+import { useFeedback } from '@/contexts/FeedbackContext';
 
 const LiveAccidentStats = () => {
   const [stats, setStats] = useState<LiveStats>(getLiveStats());
+  const { triggerFeedback } = useFeedback();
 
   useEffect(() => {
     const interval = setInterval(() => {
@@ -23,6 +25,7 @@ const LiveAccidentStats = () => {
   }));
 
   const handleDownload = () => {
+    triggerFeedback('success');
     generateLiveStatsReport(stats);
   };
 
@@ -31,46 +34,50 @@ const LiveAccidentStats = () => {
       icon: TrendingUp, 
       value: stats.totalAccidentsToday, 
       label: "Today's Accidents",
-      gradient: 'from-neon-pink to-neon-purple',
-      glow: 'glow-neon-pink'
+      color: 'text-emergency',
+      bg: 'bg-emergency/10',
+      border: 'border-emergency/20'
     },
     { 
       icon: Activity, 
       value: stats.totalAccidentsMonth, 
       label: 'This Month',
-      gradient: 'from-neon-purple to-neon-cyan',
-      glow: 'glow-neon-purple'
+      color: 'text-warning',
+      bg: 'bg-warning/10',
+      border: 'border-warning/20'
     },
     { 
       icon: Bell, 
       value: stats.alertsSent, 
       label: 'Alerts Sent',
-      gradient: 'from-neon-cyan to-neon-green',
-      glow: 'glow-neon-cyan'
+      color: 'text-primary',
+      bg: 'bg-primary/10',
+      border: 'border-primary/20'
     },
     { 
       icon: Clock, 
       value: stats.avgResponseTime.toFixed(1), 
       label: 'Avg Response (min)',
-      gradient: 'from-neon-green to-neon-cyan',
-      glow: ''
+      color: 'text-success',
+      bg: 'bg-success/10',
+      border: 'border-success/20'
     }
   ];
 
   const barColors = [
-    'hsl(340 82% 52%)',  // neon-pink
-    'hsl(280 60% 50%)',  // neon-purple
-    'hsl(190 90% 50%)',  // neon-cyan
-    'hsl(160 80% 45%)',  // neon-green
-    'hsl(25 95% 53%)'    // neon-orange
+    'hsl(var(--chart-1))',
+    'hsl(var(--chart-2))',
+    'hsl(var(--chart-3))',
+    'hsl(var(--chart-4))',
+    'hsl(var(--chart-5))'
   ];
 
   const CustomTooltip = ({ active, payload, label }: any) => {
     if (active && payload && payload.length) {
       return (
-        <div className="neon-card p-3 text-sm border-neon-pink/30">
+        <div className="chart-tooltip">
           <p className="font-bold text-foreground mb-1">{label}</p>
-          <p className="text-neon-pink">{payload[0].value} accidents</p>
+          <p className="text-primary">{payload[0].value} accidents</p>
         </div>
       );
     }
@@ -78,25 +85,22 @@ const LiveAccidentStats = () => {
   };
 
   return (
-    <div className="neon-card p-6 rounded-3xl">
+    <div className="card-elevated p-6 rounded-3xl">
       <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-6">
-        <div className="flex items-center gap-4">
-          <div className="icon-container-neon animate-glow-pulse">
-            <Activity className="h-6 w-6 text-white" />
+        <div className="section-header mb-0">
+          <div className="icon-container-emergency">
+            <Activity className="h-6 w-6" />
           </div>
           <div>
-            <h3 className="text-xl font-black text-foreground flex items-center gap-2">
-              Live Accident Stats
-              <Sparkles className="h-4 w-4 text-neon-cyan animate-pulse" />
-            </h3>
-            <p className="text-xs text-muted-foreground">Real-time monitoring across regions</p>
+            <h3 className="section-title">Live Accident Stats</h3>
+            <p className="section-subtitle">Real-time monitoring across regions</p>
           </div>
         </div>
         <Button 
           variant="outline" 
           size="sm" 
           onClick={handleDownload}
-          className="neon-card border-neon-pink/30 text-foreground hover:bg-neon-pink/10 hover:border-neon-pink/50 rounded-xl gap-2 transition-all"
+          className="rounded-xl hover:bg-primary/10 hover:text-primary hover:border-primary/30 gap-2 transition-all"
         >
           <Download className="h-4 w-4" />
           Download Report
@@ -106,51 +110,45 @@ const LiveAccidentStats = () => {
       {/* Stat Cards */}
       <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-6">
         {statCards.map((stat, index) => (
-          <div 
+          <motion.div 
             key={index}
-            className={`group neon-card-hover p-5 rounded-2xl text-center ${stat.glow}`}
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: index * 0.05 }}
+            className={`p-5 rounded-2xl text-center border ${stat.bg} ${stat.border} hover:shadow-md transition-shadow`}
           >
-            <div className={`w-12 h-12 mx-auto mb-3 rounded-xl bg-gradient-to-br ${stat.gradient} flex items-center justify-center group-hover:scale-110 transition-transform`}>
-              <stat.icon className="h-6 w-6 text-white" />
+            <div className={`w-12 h-12 mx-auto mb-3 rounded-xl ${stat.bg} flex items-center justify-center`}>
+              <stat.icon className={`h-6 w-6 ${stat.color}`} />
             </div>
-            <p className="text-3xl font-black text-foreground mb-1">{stat.value}</p>
-            <p className="text-xs text-muted-foreground">{stat.label}</p>
-          </div>
+            <p className={`text-3xl font-black ${stat.color}`}>{stat.value}</p>
+            <p className="text-xs text-muted-foreground mt-1">{stat.label}</p>
+          </motion.div>
         ))}
       </div>
 
       {/* Chart */}
-      <div className="cyber-card p-5 rounded-2xl">
-        <p className="text-sm font-semibold text-muted-foreground mb-4">Accidents by Region</p>
+      <div className="card-elevated p-5 rounded-2xl">
+        <p className="text-sm font-semibold text-muted-foreground mb-4 uppercase tracking-wide">Accidents by Region</p>
         <div className="h-64">
           <ResponsiveContainer width="100%" height="100%">
             <BarChart data={chartData} barCategoryGap="20%">
-              <defs>
-                {barColors.map((color, index) => (
-                  <linearGradient key={index} id={`barGradient${index}`} x1="0" y1="0" x2="0" y2="1">
-                    <stop offset="0%" stopColor={color} stopOpacity={1} />
-                    <stop offset="100%" stopColor={color} stopOpacity={0.6} />
-                  </linearGradient>
-                ))}
-              </defs>
               <XAxis 
                 dataKey="name" 
-                tick={{ fill: 'hsl(240 10% 60%)', fontSize: 12 }}
-                axisLine={{ stroke: 'hsl(240 15% 20%)' }}
+                tick={{ fill: 'hsl(var(--muted-foreground))', fontSize: 12 }}
+                axisLine={{ stroke: 'hsl(var(--border))' }}
                 tickLine={false}
               />
               <YAxis 
-                tick={{ fill: 'hsl(240 10% 60%)', fontSize: 12 }}
-                axisLine={{ stroke: 'hsl(240 15% 20%)' }}
+                tick={{ fill: 'hsl(var(--muted-foreground))', fontSize: 12 }}
+                axisLine={false}
                 tickLine={false}
               />
               <Tooltip content={<CustomTooltip />} />
-              <Bar dataKey="accidents" radius={[10, 10, 0, 0]}>
+              <Bar dataKey="accidents" radius={[8, 8, 0, 0]}>
                 {chartData.map((_, index) => (
                   <Cell 
                     key={`cell-${index}`} 
-                    fill={`url(#barGradient${index})`}
-                    style={{ filter: `drop-shadow(0 0 8px ${barColors[index]}40)` }}
+                    fill={barColors[index % barColors.length]}
                   />
                 ))}
               </Bar>
@@ -161,7 +159,7 @@ const LiveAccidentStats = () => {
 
       {/* Live indicator */}
       <div className="mt-5 flex items-center justify-center gap-2 text-sm text-muted-foreground">
-        <div className="w-2 h-2 rounded-full bg-neon-green pulse-cyber" />
+        <div className="w-2 h-2 rounded-full bg-success animate-pulse" />
         <span>Updating in real-time</span>
       </div>
     </div>
