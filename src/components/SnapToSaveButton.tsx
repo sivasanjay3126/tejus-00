@@ -18,7 +18,7 @@ const SnapToSaveButton = () => {
       whileHover={{ y: -2, boxShadow: '0 8px 24px hsl(var(--emergency) / 0.25)' }}
       whileTap={{ scale: 0.98 }}
       onClick={handleClick} 
-      className="group w-full card-interactive p-5 flex items-center gap-4 bg-gradient-to-r from-emergency/10 to-emergency/5 border-emergency/20 hover:border-emergency/40"
+      className="group w-full card-interactive p-5 flex items-center gap-4 bg-emergency/5 border-emergency/20 hover:border-emergency/40"
       aria-label="Snap to Save - Take a photo for emergency"
     >
       <div className="icon-container-emergency">

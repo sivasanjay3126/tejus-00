@@ -1,5 +1,5 @@
 import React from 'react';
-import { Heart, Shield, Settings, Accessibility } from 'lucide-react';
+import { Heart, Accessibility } from 'lucide-react';
 import { motion } from 'framer-motion';
 import { useLanguage } from '@/contexts/LanguageContext';
 import { useFeedback } from '@/contexts/FeedbackContext';

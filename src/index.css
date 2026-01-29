@@ -485,21 +485,10 @@
   }
 
   /* Legacy support - map old classes to new ones */
-  .neon-card { @apply card-elevated; }
-  .neon-card-hover { @apply card-interactive; }
-  .cyber-card { @apply card-elevated; }
   .glass-card { @apply card-glass; }
-  .icon-container-neon { @apply icon-container; }
-  .icon-container-cyber { @apply icon-container-info; }
   .icon-container-purple { @apply icon-container; background: hsl(262 83% 58%); }
-  .neon-button { @apply btn-primary; }
   .emergency-button { @apply btn-emergency w-full; }
-  .bg-mesh-cyber { @apply bg-gradient-subtle; }
   .bg-mesh-gradient { @apply bg-gradient-subtle; }
-  .bg-orbs { /* removed - no longer needed */ }
-  .pulse-cyber { @apply animate-attention; }
-  .glow-neon-pink { box-shadow: 0 4px 14px hsl(var(--emergency) / 0.25); }
-  .glow-neon-cyan { box-shadow: 0 4px 14px hsl(var(--info) / 0.25); }
   
   /* Fade animations */
   @keyframes fade-up {

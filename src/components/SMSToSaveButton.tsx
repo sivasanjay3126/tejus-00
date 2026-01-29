@@ -1,46 +1,42 @@
-
 import React from 'react';
-import { Send, Wifi } from 'lucide-react';
+import { MessageSquare, ArrowRight, WifiOff } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
-import { useLanguage } from '@/contexts/LanguageContext';
+import { motion } from 'framer-motion';
+import { useFeedback } from '@/contexts/FeedbackContext';
 
 const SMSToSaveButton = () => {
   const navigate = useNavigate();
-  const { t } = useLanguage();
+  const { triggerFeedback } = useFeedback();
 
   const handleClick = () => {
+    triggerFeedback('click');
     navigate('/sms-capture');
   };
 
   return (
-    <button 
+    <motion.button 
+      whileHover={{ y: -2, boxShadow: '0 8px 24px hsl(var(--info) / 0.25)' }}
+      whileTap={{ scale: 0.98 }}
       onClick={handleClick} 
-      className="group relative w-full overflow-hidden rounded-2xl p-[2px] transition-all duration-300 hover:scale-[1.02]"
-      aria-label="SMS to Save - Send emergency SMS with photo offline"
+      className="group w-full card-interactive p-5 flex items-center gap-4 bg-info/5 border-info/20 hover:border-info/40"
+      aria-label="SMS to Save - Send emergency SMS offline"
     >
-      {/* Animated gradient border */}
-      <div className="absolute inset-0 rounded-2xl bg-gradient-cyber opacity-75 group-hover:opacity-100 transition-opacity" />
-      
-      {/* Inner content */}
-      <div className="relative flex items-center justify-center gap-4 rounded-2xl bg-background/90 backdrop-blur-sm px-6 py-5 transition-all group-hover:bg-background/80">
-        <div className="relative">
-          <div className="absolute inset-0 rounded-xl bg-neon-purple/30 blur-lg group-hover:blur-xl transition-all" />
-          <div className="relative p-3 rounded-xl bg-gradient-to-br from-neon-purple to-neon-pink">
-            <Send className="h-7 w-7 text-white" />
-          </div>
-        </div>
-        <div className="flex-1 text-left">
-          <span className="text-xl font-bold text-foreground flex items-center gap-2">
-            {t('main.smsToSave')}
-            <Wifi className="h-4 w-4 text-neon-purple opacity-50" strokeWidth={3} />
-          </span>
-          <p className="text-sm text-muted-foreground">Works offline too</p>
-        </div>
-        <div className="h-10 w-10 rounded-full bg-neon-purple/20 flex items-center justify-center group-hover:bg-neon-purple/30 transition-colors">
-          <span className="text-neon-purple text-lg">→</span>
-        </div>
+      <div className="icon-container-info">
+        <MessageSquare className="h-6 w-6" />
       </div>
-    </button>
+      
+      <div className="flex-1 text-left">
+        <span className="text-lg font-bold text-foreground block flex items-center gap-2">
+          SMS to Save
+          <WifiOff className="h-4 w-4 text-muted-foreground" />
+        </span>
+        <p className="text-sm text-muted-foreground">Works offline too</p>
+      </div>
+      
+      <div className="w-10 h-10 rounded-full bg-info/10 flex items-center justify-center group-hover:bg-info/20 transition-colors">
+        <ArrowRight className="h-5 w-5 text-info group-hover:translate-x-0.5 transition-transform" />
+      </div>
+    </motion.button>
   );
 };
 
