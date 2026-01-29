@@ -6,7 +6,7 @@ import SnapToSaveButton from '@/components/SnapToSaveButton';
 import GoToSaveButton from '@/components/GoToSaveButton';
 import SMSToSaveButton from '@/components/SMSToSaveButton';
 import FirstAidVideos from '@/components/FirstAidVideos';
-import { Phone, Compass, BarChart3, ChevronRight, Shield, Flame, Radio, Heart } from 'lucide-react';
+import { Phone, Info, BarChart3, ChevronRight, Shield, Flame, Siren, Heart, Users } from 'lucide-react';
 import { useLanguage } from '@/contexts/LanguageContext';
 import { useFeedback } from '@/contexts/FeedbackContext';
 
@@ -18,8 +18,8 @@ const Index = () => {
     { name: t('contacts.ambulance'), number: "108", icon: Heart, color: 'bg-emergency' },
     { name: t('contacts.police'), number: "100", icon: Shield, color: 'bg-primary' },
     { name: t('contacts.fire'), number: "101", icon: Flame, color: 'bg-warning' },
-    { name: t('contacts.disaster'), number: "108", icon: Radio, color: 'bg-chart-5' },
-    { name: t('contacts.women'), number: "1091", icon: Shield, color: 'bg-info' }
+    { name: t('contacts.disaster'), number: "108", icon: Siren, color: 'bg-chart-5' },
+    { name: t('contacts.women'), number: "1091", icon: Users, color: 'bg-info' }
   ];
 
   const handleContactClick = () => {
@@ -27,7 +27,7 @@ const Index = () => {
   };
 
   return (
-    <div className="min-h-screen flex flex-col bg-background text-foreground bg-gradient-subtle">
+    <div className="min-h-screen flex flex-col bg-background text-foreground">
       <EmergencyHeader />
       
       <main className="flex-1 container mx-auto p-4 max-w-md">
@@ -90,7 +90,7 @@ const Index = () => {
           className="card-elevated p-6 mb-6"
         >
           <div className="section-header">
-            <div className="icon-container-info">
+            <div className="icon-container-emergency">
               <Phone className="h-5 w-5" />
             </div>
             <div>
@@ -110,7 +110,7 @@ const Index = () => {
                 whileTap={{ scale: 0.98 }}
                 className="group card-elevated p-4 flex flex-col items-center justify-center text-center hover:border-primary/30"
               >
-                <div className={`w-14 h-14 rounded-2xl ${contact.color} flex items-center justify-center mb-3 text-white shadow-lg group-hover:scale-105 transition-transform`}>
+                <div className={`w-14 h-14 rounded-2xl ${contact.color} flex items-center justify-center mb-3 text-white shadow-sm group-hover:scale-105 transition-transform`}>
                   <contact.icon className="h-6 w-6" />
                 </div>
                 <span className="text-2xl font-black text-foreground mb-1">{contact.number}</span>
@@ -130,8 +130,8 @@ const Index = () => {
           className="card-elevated p-6 mb-6"
         >
           <div className="section-header">
-            <div className="icon-container" style={{ background: 'hsl(262 83% 58%)' }}>
-              <Compass className="h-5 w-5" />
+            <div className="icon-container" style={{ background: 'hsl(262, 83%, 58%)' }}>
+              <Info className="h-5 w-5" />
             </div>
             <h2 className="section-title">
               {t('about.title')}
