@@ -37,6 +37,7 @@ export const useVehicleSpeed = () => {
     accuracy: null,
     lastUpdate: null,
   });
+  const autoStartedRef = useRef(false);
 
   const prevPositionRef = useRef<{ lat: number; lon: number; time: number } | null>(null);
   const watchIdRef = useRef<number | null>(null);
@@ -194,6 +195,14 @@ export const useVehicleSpeed = () => {
       stopAlarm();
     };
   }, [stopAlarm]);
+
+  // Auto-start tracking on mount
+  useEffect(() => {
+    if (!autoStartedRef.current && navigator.geolocation) {
+      autoStartedRef.current = true;
+      startTracking();
+    }
+  }, [startTracking]);
 
   return { ...data, startTracking, stopTracking, SPEED_THRESHOLD: SPEED_THRESHOLD_KMH };
 };
