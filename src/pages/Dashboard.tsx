@@ -10,6 +10,7 @@ import LocationAnalysis from '@/components/dashboard/LocationAnalysis';
 import TimeAnalysis from '@/components/dashboard/TimeAnalysis';
 import SeverityAnalysis from '@/components/dashboard/SeverityAnalysis';
 import SystemPerformance from '@/components/dashboard/SystemPerformance';
+import SpeedMonitor from '@/components/dashboard/SpeedMonitor';
 
 const Dashboard = () => {
   const regions = ['Salem', 'Erode', 'Namakkal', 'Dharmapuri', 'Coimbatore'];
@@ -84,6 +85,16 @@ const Dashboard = () => {
               ))}
             </div>
           </div>
+        </motion.div>
+
+        {/* Speed Monitor - Full width, above grid */}
+        <motion.div 
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.05 }}
+          className="mb-6"
+        >
+          <SpeedMonitor />
         </motion.div>
 
         {/* Dashboard Grid */}
