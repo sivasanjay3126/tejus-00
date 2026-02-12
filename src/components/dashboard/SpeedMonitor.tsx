@@ -1,7 +1,6 @@
 import React from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Gauge, Play, Square, AlertTriangle, TrendingUp, Locate } from 'lucide-react';
-import { Button } from '@/components/ui/button';
+import { Gauge, AlertTriangle, TrendingUp, Locate } from 'lucide-react';
 import { useVehicleSpeed } from '@/hooks/useVehicleSpeed';
 
 const SpeedMonitor = () => {
@@ -26,25 +25,19 @@ const SpeedMonitor = () => {
 
   return (
     <div className={`card-elevated p-6 transition-all duration-500 ${isOverspeed ? 'border-emergency/50 bg-emergency/5' : ''}`}>
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-6">
+      <div className="flex items-center justify-between gap-4 mb-6">
         <div className="section-header mb-0">
           <div className={isOverspeed ? 'icon-container-emergency' : 'icon-container'}>
             <Gauge className="h-5 w-5" />
           </div>
           <div>
             <h3 className="section-title">Speed Monitor</h3>
-            <p className="section-subtitle">Real-time GPS vehicle speed</p>
+            <p className="section-subtitle">Always-on GPS tracking</p>
           </div>
         </div>
-        <Button
-          variant={isTracking ? "destructive" : "default"}
-          size="sm"
-          onClick={isTracking ? stopTracking : startTracking}
-          className="rounded-xl gap-2"
-        >
-          {isTracking ? <Square className="h-4 w-4" /> : <Play className="h-4 w-4" />}
-          {isTracking ? 'Stop' : 'Start'} Tracking
-        </Button>
+        {isTracking && (
+          <span className="badge-live">Live</span>
+        )}
       </div>
 
       {/* Speedometer Gauge */}
@@ -150,7 +143,7 @@ const SpeedMonitor = () => {
       {/* Status indicator */}
       {!isTracking && (
         <p className="text-center text-xs text-muted-foreground mt-4">
-          Press <span className="font-semibold text-primary">Start Tracking</span> to begin GPS speed monitoring
+          Initializing GPS tracking…
         </p>
       )}
     </div>
