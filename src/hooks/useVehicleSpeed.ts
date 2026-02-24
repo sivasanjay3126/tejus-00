@@ -143,14 +143,9 @@ export const useVehicleSpeed = () => {
 
         const isOver = smoothedSpeed > SPEED_THRESHOLD_KMH;
 
-        // Trigger alarm only on transition from safe → overspeed
-        if (isOver && !wasOverspeedRef.current) {
-          playAlarm();
-        }
-        // If speed drops below threshold, reset so alarm can trigger again
+        // Reset overspeed tracking (no alarm sound)
         if (!isOver) {
           wasOverspeedRef.current = false;
-          if (alarmActiveRef.current) stopAlarm();
         } else {
           wasOverspeedRef.current = true;
         }
