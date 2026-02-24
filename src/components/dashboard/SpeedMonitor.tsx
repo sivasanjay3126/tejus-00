@@ -1,9 +1,12 @@
-import React from 'react';
+import React, { useRef, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Gauge, AlertTriangle, TrendingUp, Locate } from 'lucide-react';
 import { useVehicleSpeed } from '@/hooks/useVehicleSpeed';
+import { useToast } from '@/hooks/use-toast';
 
 const SpeedMonitor = () => {
+  const { toast } = useToast();
+  const wasOverspeedRef = useRef(false);
   const {
     currentSpeed,
     maxSpeed,
@@ -14,6 +17,17 @@ const SpeedMonitor = () => {
     stopTracking,
     SPEED_THRESHOLD,
   } = useVehicleSpeed();
+
+  useEffect(() => {
+    if (isOverspeed && !wasOverspeedRef.current) {
+      toast({
+        variant: "destructive",
+        title: "⚠ Overspeed Detected!",
+        description: `Speed ${currentSpeed.toFixed(0)} km/h exceeds the ${SPEED_THRESHOLD} km/h limit. Please slow down.`,
+      });
+    }
+    wasOverspeedRef.current = isOverspeed;
+  }, [isOverspeed]);
 
   const speedPercent = Math.min((currentSpeed / 150) * 100, 100);
   const thresholdPercent = (SPEED_THRESHOLD / 150) * 100;
