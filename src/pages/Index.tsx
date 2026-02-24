@@ -7,7 +7,7 @@ import GoToSaveButton from '@/components/GoToSaveButton';
 import SMSToSaveButton from '@/components/SMSToSaveButton';
 import FirstAidVideos from '@/components/FirstAidVideos';
 import SpeedMonitor from '@/components/dashboard/SpeedMonitor';
-import { Phone, Info, BarChart3, ChevronRight, Shield, Flame, Siren, Heart, Users } from 'lucide-react';
+import { Phone, Info, BarChart3, ChevronRight, Shield, Flame, Siren, Heart, Users, Mail, PhoneCall } from 'lucide-react';
 import { useLanguage } from '@/contexts/LanguageContext';
 import { useFeedback } from '@/contexts/FeedbackContext';
 
@@ -159,6 +159,30 @@ const Index = () => {
           transition={{ delay: 0.4 }}
         >
           <FirstAidVideos />
+        </motion.div>
+
+        {/* Credits Section */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.5 }}
+          className="card-elevated p-6 mt-6"
+        >
+          <div className="text-center space-y-3">
+            <h3 className="text-sm font-bold text-foreground">
+              This Application is created by Sivasanjay and Team
+            </h3>
+            <div className="flex flex-col items-center gap-2 text-sm text-muted-foreground">
+              <a href="tel:+919092023126" className="flex items-center gap-2 hover:text-primary transition-colors">
+                <PhoneCall className="h-4 w-4" />
+                +91 90920 23126
+              </a>
+              <a href="mailto:sivasanjayv2004@gmail.com" className="flex items-center gap-2 hover:text-primary transition-colors">
+                <Mail className="h-4 w-4" />
+                sivasanjayv2004@gmail.com
+              </a>
+            </div>
+          </div>
         </motion.div>
       </main>
       
