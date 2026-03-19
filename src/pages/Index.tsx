@@ -59,15 +59,6 @@ const Index = () => {
           </motion.div>
         </Link>
 
-        {/* Speed Monitor - Always On */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.1 }}
-          className="mb-6"
-        >
-          <SpeedMonitor />
-        </motion.div>
 
         {/* Main Actions Card */}
         <motion.div

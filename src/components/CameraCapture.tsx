@@ -127,7 +127,7 @@ const CameraCapture = () => {
         <Button variant="ghost" size="icon" onClick={() => navigate('/')} className="text-white">
           <ArrowLeft />
         </Button>
-        <h1 className="text-xl font-bold ml-2 flex-1 text-center">TEJUS - Emergency Photo</h1>
+        <h1 className="text-xl font-bold ml-2 flex-1 text-center">Emergency Photo</h1>
       </div>
       
       <div className="flex-1 bg-black relative overflow-hidden">

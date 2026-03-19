@@ -56,7 +56,7 @@ const translations = {
     'nearby.noFacilities': 'found nearby',
     
     // SMS Capture
-    'sms.title': 'TEJUS - SMS Emergency',
+    'sms.title': 'SMS Emergency',
     'sms.offline': 'Offline Mode - Auto SMS Ready',
     'sms.location': 'Location:',
     'sms.willSend': 'SMS will be sent to: +91 9092023126 (Offline Mode)',
