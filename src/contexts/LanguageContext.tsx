@@ -229,7 +229,7 @@ const translations = {
     'footer.copyright': '© 2025 എല്ലാ അവകാശങ്ങളും സംരക്ഷിച്ചിരിക്കുന്നു',
     
     // Nearby facilities
-    'nearby.title': 'തേജസ് - തമിഴ്നാട് മുഴുവൻ മെഡിക്കൽ സഹായം',
+    'nearby.title': 'തമിഴ്നാട് മുഴുവൻ മെഡിക്കൽ സഹായം',
     'nearby.showing': 'തമിഴ്നാട് മുഴുവൻ മെഡിക്കൽ സൗകര്യങ്ങൾ കാണിക്കുന്നു',
     'nearby.hospitals': 'ആശുപത്രികൾ',
     'nearby.shops': 'കടകൾ',
