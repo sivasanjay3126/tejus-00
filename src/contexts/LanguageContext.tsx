@@ -38,7 +38,7 @@ const translations = {
     
     // About section
     'about.title': 'About Tamil Nadu Medical Services',
-    'about.description': 'Tamil Nadu has comprehensive government and private hospitals equipped with emergency services across all districts. The TEJUS app helps you locate and connect with the nearest medical facilities quickly during emergencies.',
+    'about.description': 'Tamil Nadu has comprehensive government and private hospitals equipped with emergency services across all districts. This app helps you locate and connect with the nearest medical facilities quickly during emergencies.',
     
     // Footer
     'footer.title': 'TEJUS Emergency Alert System',
