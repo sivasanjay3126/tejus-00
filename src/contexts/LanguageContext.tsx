@@ -102,7 +102,7 @@ const translations = {
     'nearby.noFacilities': 'அருகில் கிடைக்கவில்லை',
     
     // SMS Capture
-    'sms.title': 'டெஜஸ் - எஸ்எம்எஸ் அவசரம்',
+    'sms.title': 'எஸ்எம்எஸ் அவசரம்',
     'sms.offline': 'ஆஃப்லைன் முறை - தானியங்கி எஸ்எம்எஸ் தயார்',
     'sms.location': 'இடம்:',
     'sms.willSend': 'எஸ்எம்எஸ் அனுப்பப்படும்: +91 9092023126 (ஆஃப்லைன் முறை)',
