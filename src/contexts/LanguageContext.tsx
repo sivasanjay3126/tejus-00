@@ -183,7 +183,7 @@ const translations = {
     'footer.copyright': '© 2025 ಎಲ್ಲಾ ಹಕ್ಕುಗಳು ಕಾಯ್ದಿರಿಸಲಾಗಿದೆ',
     
     // Nearby facilities
-    'nearby.title': 'ತೇಜಸ್ - ತಮಿಳುನಾಡಿನಾದ್ಯಂತ ವೈದ್ಯಕೀಯ ಸಹಾಯ',
+    'nearby.title': 'ತಮಿಳುನಾಡಿನಾದ್ಯಂತ ವೈದ್ಯಕೀಯ ಸಹಾಯ',
     'nearby.showing': 'ತಮಿಳುನಾಡಿನಾದ್ಯಂತ ವೈದ್ಯಕೀಯ ಸೌಲಭ್ಯಗಳನ್ನು ತೋರಿಸುತ್ತಿದೆ',
     'nearby.hospitals': 'ಆಸ್ಪತ್ರೆಗಳು',
     'nearby.shops': 'ಅಂಗಡಿಗಳು',
