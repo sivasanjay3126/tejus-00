@@ -45,7 +45,7 @@ const translations = {
     'footer.copyright': '© 2025 All rights reserved',
     
     // Nearby facilities
-    'nearby.title': 'TEJUS - Medical Help Across Tamil Nadu',
+    'nearby.title': 'Medical Help Across Tamil Nadu',
     'nearby.showing': 'Showing medical facilities across Tamil Nadu',
     'nearby.hospitals': 'Hospitals',
     'nearby.shops': 'Shops',
