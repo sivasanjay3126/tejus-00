@@ -10,7 +10,7 @@ import LocationAnalysis from '@/components/dashboard/LocationAnalysis';
 import TimeAnalysis from '@/components/dashboard/TimeAnalysis';
 import SeverityAnalysis from '@/components/dashboard/SeverityAnalysis';
 import SystemPerformance from '@/components/dashboard/SystemPerformance';
-import SpeedMonitor from '@/components/dashboard/SpeedMonitor';
+
 
 const Dashboard = () => {
   const regions = ['Salem', 'Erode', 'Namakkal', 'Dharmapuri', 'Coimbatore'];
