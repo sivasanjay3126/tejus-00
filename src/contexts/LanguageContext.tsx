@@ -41,7 +41,7 @@ const translations = {
     'about.description': 'Tamil Nadu has comprehensive government and private hospitals equipped with emergency services across all districts. This app helps you locate and connect with the nearest medical facilities quickly during emergencies.',
     
     // Footer
-    'footer.title': 'TEJUS Emergency Alert System',
+    'footer.title': 'Emergency Alert System',
     'footer.copyright': '© 2025 All rights reserved',
     
     // Nearby facilities
