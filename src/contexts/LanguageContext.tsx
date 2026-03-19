@@ -194,7 +194,7 @@ const translations = {
     'nearby.noFacilities': 'ಹತ್ತಿರದಲ್ಲಿ ಸಿಗಲಿಲ್ಲ',
     
     // SMS Capture
-    'sms.title': 'ತೇಜಸ್ - SMS ತುರ್ತು',
+    'sms.title': 'SMS ತುರ್ತು',
     'sms.offline': 'ಆಫ್‌ಲೈನ್ ಮೋಡ್ - ಆಟೋ SMS ಸಿದ್ಧ',
     'sms.location': 'ಸ್ಥಳ:',
     'sms.willSend': 'SMS ಕಳುಹಿಸಲಾಗುವುದು: +91 9092023126 (ಆಫ್‌ಲೈನ್ ಮೋಡ್)',
