@@ -91,7 +91,7 @@ const translations = {
     'footer.copyright': '© 2025 அனைத்து உரிமைகளும் பாதுகாக்கப்பட்டவை',
     
     // Nearby facilities
-    'nearby.title': 'டெஜஸ் - தமிழ்நாடு முழுவதும் மருத்துவ உதவி',
+    'nearby.title': 'தமிழ்நாடு முழுவதும் மருத்துவ உதவி',
     'nearby.showing': 'தமிழ்நாடு முழுவதும் மருத்துவ வசதிகளைக் காட்டுகிறது',
     'nearby.hospitals': 'மருத்துவமனைகள்',
     'nearby.shops': 'கடைகள்',
