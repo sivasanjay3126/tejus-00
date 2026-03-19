@@ -6,7 +6,6 @@ import SnapToSaveButton from '@/components/SnapToSaveButton';
 import GoToSaveButton from '@/components/GoToSaveButton';
 import SMSToSaveButton from '@/components/SMSToSaveButton';
 import FirstAidVideos from '@/components/FirstAidVideos';
-import SpeedMonitor from '@/components/dashboard/SpeedMonitor';
 import { Phone, Info, BarChart3, ChevronRight, Shield, Flame, Siren, Heart, Users, Mail, PhoneCall } from 'lucide-react';
 import { useLanguage } from '@/contexts/LanguageContext';
 import { useFeedback } from '@/contexts/FeedbackContext';
