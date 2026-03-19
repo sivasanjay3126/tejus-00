@@ -18,7 +18,7 @@ interface LanguageProviderProps {
 const translations = {
   en: {
     // Header
-    'app.title': 'TEJUS',
+    'app.title': 'Emergency Alert',
     'app.subtitle': 'Emergency Alert System',
     
     // Main page
