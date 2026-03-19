@@ -286,7 +286,7 @@ const translations = {
     'nearby.noFacilities': 'पास में नहीं मिला',
     
     // SMS Capture
-    'sms.title': 'तेजस - SMS आपातकाल',
+    'sms.title': 'SMS आपातकाल',
     'sms.offline': 'ऑफलाइन मोड - ऑटो SMS तैयार',
     'sms.location': 'स्थान:',
     'sms.willSend': 'SMS भेजा जाएगा: +91 9092023126 (ऑफलाइन मोड)',
