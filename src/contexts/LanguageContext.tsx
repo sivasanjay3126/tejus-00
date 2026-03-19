@@ -332,7 +332,7 @@ const translations = {
     'nearby.noFacilities': 'ಹತ್ತಿರ ಸಿಗ್‌ಜಿಲ್ಲ',
     
     // SMS Capture
-    'sms.title': 'ತೇಜಸ್ - SMS ಎಮರ್ಜೆನ್ಸಿ',
+    'sms.title': 'SMS ಎಮರ್ಜೆನ್ಸಿ',
     'sms.offline': 'ಆಫ್‌ಲೈನ್ ಮೋಡ್ - ಆಟೋ SMS ರೆಡಿ',
     'sms.location': 'ಜಾಗೊ:',
     'sms.willSend': 'SMS ಕಳಿಸ್‌ತುಂಡು: +91 9092023126 (ಆಫ್‌ಲೈನ್ ಮೋಡ್)',
