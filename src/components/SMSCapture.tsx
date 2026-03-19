@@ -127,7 +127,7 @@ const SMSCapture = () => {
       const emergencyNumber = "9092023126";
       const googleMapsLink = `https://maps.google.com/?q=${locationData.latitude},${locationData.longitude}`;
       
-      const smsMessage = `EMERGENCY ALERT from TEJUS App! Location: ${googleMapsLink} Time: ${new Date(locationData.timestamp).toLocaleString()} - Photo captured for emergency assistance. Please respond immediately!`;
+      const smsMessage = `EMERGENCY ALERT! Location: ${googleMapsLink} Time: ${new Date(locationData.timestamp).toLocaleString()} - Photo captured for emergency assistance. Please respond immediately!`;
       
       const { data, error } = await supabase
         .from('emergency_incidents')
@@ -174,7 +174,7 @@ const SMSCapture = () => {
       const emergencyNumber = "9092023126";
       const googleMapsLink = `https://maps.google.com/?q=${locationData.latitude},${locationData.longitude}`;
       
-      const smsMessage = `🚨 EMERGENCY ALERT from TEJUS App!
+      const smsMessage = `🚨 EMERGENCY ALERT!
 📍 Location: ${googleMapsLink}
 ⏰ Time: ${new Date(locationData.timestamp).toLocaleString()}
 📸 Photo captured for emergency assistance
@@ -204,7 +204,7 @@ Please respond immediately!`;
       // Fallback SMS without Supabase
       const emergencyNumber = "9092023126";
       const googleMapsLink = `https://maps.google.com/?q=${locationData.latitude},${locationData.longitude}`;
-      const smsMessage = `🚨 EMERGENCY ALERT from TEJUS App! Location: ${googleMapsLink} Time: ${new Date(locationData.timestamp).toLocaleString()} - Photo captured. Please respond immediately!`;
+      const smsMessage = `🚨 EMERGENCY ALERT! Location: ${googleMapsLink} Time: ${new Date(locationData.timestamp).toLocaleString()} - Photo captured. Please respond immediately!`;
       const smsUrl = `sms:${emergencyNumber}?body=${encodeURIComponent(smsMessage)}`;
       window.location.href = smsUrl;
     } finally {
