@@ -321,7 +321,7 @@ const translations = {
     'footer.copyright': '© 2025 ಅಕ್ಲಾ ಹಕ್ಕುಲು ಕಾಪಾಡ್‌ದುಂಡು',
     
     // Nearby facilities
-    'nearby.title': 'ತೇಜಸ್ - ತಮಿಳುನಾಡು ಅಕ್ಲೆ ಮೆಡಿಕಲ್ ಸಹಾಯ',
+    'nearby.title': 'ತಮಿಳುನಾಡು ಅಕ್ಲೆ ಮೆಡಿಕಲ್ ಸಹಾಯ',
     'nearby.showing': 'ತಮಿಳುನಾಡು ಅಕ್ಲೆ ಮೆಡಿಕಲ್ ಫೆಸಿಲಿಟಿಲೆನ್ ತೋಜುಂಡು',
     'nearby.hospitals': 'ಆಸ್ಪತ್ರೆಲು',
     'nearby.shops': 'ಅಂಗಡಿಲು',
