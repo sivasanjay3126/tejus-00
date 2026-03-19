@@ -275,7 +275,7 @@ const translations = {
     'footer.copyright': '© 2025 सभी अधिकार सुरक्षित',
     
     // Nearby facilities
-    'nearby.title': 'तेजस - तमिलनाडु भर में चिकित्सा सहायता',
+    'nearby.title': 'तमिलनाडु भर में चिकित्सा सहायता',
     'nearby.showing': 'तमिलनाडु भर में चिकित्सा सुविधाएं दिखा रहा है',
     'nearby.hospitals': 'अस्पताल',
     'nearby.shops': 'दुकानें',
