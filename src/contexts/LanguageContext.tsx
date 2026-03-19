@@ -240,7 +240,7 @@ const translations = {
     'nearby.noFacilities': 'അടുത്ത് കണ്ടെത്തിയില്ല',
     
     // SMS Capture
-    'sms.title': 'തേജസ് - SMS അടിയന്തിരം',
+    'sms.title': 'SMS അടിയന്തിരം',
     'sms.offline': 'ഓഫ്‌ലൈൻ മോഡ് - ഓട്ടോ SMS റെഡി',
     'sms.location': 'സ്ഥാനം:',
     'sms.willSend': 'SMS അയയ്ക്കപ്പെടും: +91 9092023126 (ഓഫ്‌ലൈൻ മോഡ്)',
