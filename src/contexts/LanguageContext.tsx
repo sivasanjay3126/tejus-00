@@ -137,7 +137,7 @@ const translations = {
     'footer.copyright': '© 2025 అన్ని హక్కులు రక్షించబడ్డాయి',
     
     // Nearby facilities
-    'nearby.title': 'టెజస్ - తమిళనాడు అంతటా వైద్య సహాయం',
+    'nearby.title': 'తమిళనాడు అంతటా వైద్య సహాయం',
     'nearby.showing': 'తమిళనాడు అంతటా వైద్య సౌకర్యాలను చూపిస్తోంది',
     'nearby.hospitals': 'ఆసుపత్రులు',
     'nearby.shops': 'దుకాణాలు',
