@@ -148,7 +148,7 @@ const translations = {
     'nearby.noFacilities': 'దగ్గరలో దొరకలేదు',
     
     // SMS Capture
-    'sms.title': 'టెజస్ - SMS అత్యవసరం',
+    'sms.title': 'SMS అత్యవసరం',
     'sms.offline': 'ఆఫ్‌లైన్ మోడ్ - ఆటో SMS రెడీ',
     'sms.location': 'స్థానం:',
     'sms.willSend': 'SMS పంపబడుతుంది: +91 9092023126 (ఆఫ్‌లైన్ మోడ్)',
